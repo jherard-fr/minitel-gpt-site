@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MINITEL GPT — Un Minitel des années 80 propulsé par l'IA</title>
+<meta name="description" content="Transformer un Minitel Telic/Alcatel en terminal de chat IA autonome, via un Raspberry Pi Zero 2 W. Concept, électronique, câblage et logiciel.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <img class="logo" src="assets/logo-minitel-gpt.png" alt="MINITEL GPT">
+  <p class="tagline">Un Minitel des années 80, ressuscité en terminal de chat IA.</p>
+  <p class="sub">Raspberry Pi Zero 2 W · liaison série · IA conversationnelle · portail WiFi autonome</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="https://github.com/jherard-fr/minitel-gpt">Voir le code</a>
+    <a class="btn btn-ghost" href="#concept">Découvrir le projet</a>
+  </div>
+</header>
+
+<main>
+
+<!-- CONCEPT -->
+<section id="concept">
+  <h2>Le concept</h2>
+  <div class="two-col">
+    <div>
+      <p>MINITEL GPT redonne vie à un <strong>Minitel 1 Telic / Alcatel</strong> en le
+      transformant en terminal de dialogue avec une intelligence artificielle.</p>
+      <p>On tape sa question sur le clavier d'origine, elle part vers un Raspberry Pi
+      caché dans le boîtier, qui interroge un modèle de langage et renvoie la réponse —
+      affichée à l'écran cathodique, à 1200 bauds, comme en 1985.</p>
+      <p>La personnalité de l'assistant est entièrement configurable. La version phare
+      est <strong>bloquée dans les années 80</strong> : elle ne connaît rien après le
+      31 décembre 1989 et reste imperméable à toute tentative de la sortir de l'époque —
+      parfaite pour une fête d'anniversaire à thème.</p>
+    </div>
+    <div class="placeholder">
+      <span>📷 Photo à venir</span>
+      <small>Le Minitel allumé affichant l'écran d'accueil MINITEL GPT</small>
+    </div>
+  </div>
+</section>
+
+<!-- CAPTURES -->
+<section id="captures" class="alt">
+  <h2>En images</h2>
+  <p class="lead">Le terminal en fonctionnement.</p>
+  <div class="gallery">
+    <div class="placeholder"><span>📷 Capture 1</span><small>Écran d'accueil (titre ASCII + invite)</small></div>
+    <div class="placeholder"><span>📷 Capture 2</span><small>Une question / réponse à l'écran</small></div>
+    <div class="placeholder"><span>📷 Capture 3</span><small>Le Minitel ouvert, le Raspberry Pi à l'intérieur</small></div>
+    <div class="placeholder"><span>📷 Capture 4</span><small>L'interface web d'administration</small></div>
+  </div>
+  <p class="note">Pour ajouter une image : dépose le fichier dans <code>assets/</code>
+  et remplace le bloc « placeholder » correspondant dans <code>index.html</code>.</p>
+</section>
+
+<!-- ELECTRONIQUE -->
+<section id="electronique">
+  <h2>Électronique &amp; câblage</h2>
+  <p class="lead">Le pont entre 2025 et 1982 : une liaison série sur le port DIN « péri-informatique » du Minitel.</p>
+
+  <div class="two-col">
+    <div class="placeholder tall">
+      <span>📷 Schéma / photo du câblage</span>
+      <small>Vue du Raspberry Pi, de l'adaptateur FTDI et de la prise DIN</small>
+    </div>
+    <div>
+      <h3>Le matériel</h3>
+      <ul>
+        <li><strong>Raspberry Pi Zero 2 W</strong> — le cerveau, dans le boîtier</li>
+        <li><strong>Adaptateur USB-série FTDI FT232RL</strong> (réglé en 5 V)</li>
+        <li><strong>Câble OTG micro-USB</strong> pour relier le FTDI au Pi</li>
+        <li>3 fils vers la <strong>prise DIN 5 broches</strong> du Minitel</li>
+      </ul>
+      <h3>Câblage série</h3>
+      <table class="wire">
+        <thead><tr><th>FTDI</th><th>DIN Minitel</th><th>Rôle</th></tr></thead>
+        <tbody>
+          <tr><td>TXD</td><td>Broche 1</td><td>Pi → Minitel (RX)</td></tr>
+          <tr><td>RXD</td><td>Broche 3</td><td>Minitel → Pi (TX)</td></tr>
+          <tr><td>GND</td><td>Broche 2</td><td>Masse commune</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Paramètres série : <strong>1200 bauds, 7 bits, parité paire, 1 stop (7E1)</strong> — la norme Videotex.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h3>💡 Les pièges rencontrés</h3>
+    <p><em>Cette section raconte le débogage — à compléter / illustrer avec tes notes.</em></p>
+    <ul>
+      <li>Le port DIN n'émet que si le Minitel est passé en mode péri-informatique
+      (<strong>Fnct + T</strong> puis <strong>A</strong>).</li>
+      <li>Les fils nus sur l'adaptateur font de faux contacts : un branchement propre est essentiel.</li>
+      <li>Le mode mosaïque Videotex affiche les images en demi-teintes (tramage), jamais en pixels pleins.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="archi" class="alt">
+  <h2>Architecture logicielle</h2>
+  <p class="lead">Trois services autonomes orchestrés par systemd sur le Raspberry Pi.</p>
+  <div class="cards">
+    <div class="card">
+      <h3>🖥 minitel-chatgpt</h3>
+      <p>Le terminal : lit le clavier Minitel, interroge l'IA, affiche la réponse paginée.
+      Gère le titre ASCII, les touches de fonction (Envoi, Suite, Sommaire) et le retour
+      automatique au sommaire.</p>
+    </div>
+    <div class="card">
+      <h3>📡 wifi-manager</h3>
+      <p>Connexion autonome façon objet connecté : rejoint un réseau connu, ou bascule
+      en <strong>hotspot ouvert</strong> avec portail captif pour configurer le WiFi du
+      lieu — sans clavier ni écran externe.</p>
+    </div>
+    <div class="card">
+      <h3>⚙ admin-ui</h3>
+      <p>Interface web : choix et création de « personnalités » (presets), génération de
+      consignes par IA, textes d'accueil personnalisables, clé API et email de notification.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <h2>Stack technique</h2>
+  <div class="chips">
+    <span>Raspberry Pi OS Lite</span>
+    <span>Python 3</span>
+    <span>pyserial</span>
+    <span>Flask</span>
+    <span>NetworkManager / nmcli</span>
+    <span>dnsmasq</span>
+    <span>systemd</span>
+    <span>API Claude (Anthropic)</span>
+    <span>Resend (emails)</span>
+    <span>Videotex / ASCII</span>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="code" class="alt center">
+  <h2>Le projet est open source</h2>
+  <p class="lead">Tout le code, les services et les outils sont disponibles sur GitHub.</p>
+  <a class="btn btn-primary" href="https://github.com/jherard-fr/minitel-gpt">github.com/jherard-fr/minitel-gpt</a>
+</section>
+
+</main>
+
+<footer>
+  <img src="assets/favicon-32.png" alt="" width="24">
+  <p>MINITEL GPT — un projet de Jérôme Hérard. Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+</footer>
+
+</body>
+</html>
