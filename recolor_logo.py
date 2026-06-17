@@ -10,9 +10,9 @@ for y in range(h):
         r, g, b, a = px[x, y]
         if a == 0:
             continue
-        mx, mn = max(r, g, b), min(r, g, b)
-        # Vert/turquoise = G dominant + couleur saturée
-        if g > r + 12 and (mx - mn) > 22:
+        # Tout passe en blanc, SAUF les pixels très sombres (le noir du clavier)
+        # que l'on conserve pour garder le détail des touches.
+        if max(r, g, b) >= 70:
             px[x, y] = (255, 255, 255, a)
 src.save("assets/logo-minitel-gpt-white.png")
 print("Généré : assets/logo-minitel-gpt-white.png")
