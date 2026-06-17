@@ -32,8 +32,8 @@
       <p>MINITEL GPT redonne vie à un <strong>Minitel 1 Telic / Alcatel</strong> en le
       transformant en terminal de dialogue avec une intelligence artificielle.</p>
       <p>On tape sa question sur le clavier d'origine, elle part vers un Raspberry Pi
-      caché dans le boîtier, qui interroge un modèle de langage et renvoie la réponse —
-      affichée à l'écran cathodique, à 1200 bauds, comme en 1985.</p>
+      caché dans le boîtier, qui interroge un modèle de langage <strong>Mistral</strong>
+      et renvoie la réponse — affichée à l'écran cathodique, à 1200 bauds, comme en 1985.</p>
       <p>La personnalité de l'assistant est entièrement configurable. La version phare
       est <strong>bloquée dans les années 80</strong> : elle ne connaît rien après le
       31 décembre 1989 et reste imperméable à toute tentative de la sortir de l'époque —
@@ -99,6 +99,8 @@
       (<strong>Fnct + T</strong> puis <strong>A</strong>).</li>
       <li>Les fils nus sur l'adaptateur font de faux contacts : un branchement propre est essentiel.</li>
       <li>Le mode mosaïque Videotex affiche les images en demi-teintes (tramage), jamais en pixels pleins.</li>
+      <li>Le hotspot WiFi ne démarrait pas : le service <code>dnsmasq</code> système
+      occupait le port 53, empêchant NetworkManager de lancer le DHCP du point d'accès.</li>
     </ul>
   </div>
 </section>
@@ -122,8 +124,9 @@
     </div>
     <div class="card">
       <h3>⚙ admin-ui</h3>
-      <p>Interface web : choix et création de « personnalités » (presets), génération de
-      consignes par IA, textes d'accueil personnalisables, clé API et email de notification.</p>
+      <p>Interface web à onglets : choix et création de « personnalités », génération de
+      consignes par IA, <strong>fichiers de connaissance</strong> (.txt) pour nourrir
+      chaque personnalité, textes d'accueil personnalisables et clé API.</p>
     </div>
   </div>
 </section>
@@ -139,8 +142,7 @@
     <span>NetworkManager / nmcli</span>
     <span>dnsmasq</span>
     <span>systemd</span>
-    <span>API Claude (Anthropic)</span>
-    <span>Resend (emails)</span>
+    <span>API Mistral</span>
     <span>Videotex / ASCII</span>
   </div>
 </section>
