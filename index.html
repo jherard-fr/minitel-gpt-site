@@ -163,5 +163,10 @@
   <p>MINITEL GPT — un projet de Jérôme Hérard. Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
 </footer>
 
+<script>
+// Statistiques de visite (collecteur track.php)
+new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)
+  + '&p=' + encodeURIComponent(location.pathname) + '&_=' + Date.now();
+</script>
 </body>
 </html>

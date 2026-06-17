@@ -29,4 +29,6 @@ jobs:
             **/.github/**
             README.md
             **/.DS_Store
+            data/**
+            recolor_logo.py
           state-name: .ftp-deploy-sync-state.json
