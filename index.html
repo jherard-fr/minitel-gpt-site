@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MINITEL GPT — Un Minitel des années 80 propulsé par l'IA</title>
-<meta name="description" content="Transformer un Minitel Telic/Alcatel en terminal de chat IA autonome, via un Raspberry Pi Zero 2 W. Concept, électronique, câblage et logiciel.">
+<meta name="description" content="Transformer un Minitel (1 ou 2) en terminal de chat IA autonome, via un Raspberry Pi Zero 2 W. Concept, électronique, câblage et logiciel.">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
 <link rel="stylesheet" href="style.css">
@@ -30,7 +30,8 @@
   <h2>Le concept</h2>
   <div class="two-col">
     <div>
-      <p>MINITEL GPT redonne vie à un <strong>Minitel 1 Telic / Alcatel</strong> en le
+      <p>MINITEL GPT redonne vie à un <strong>Minitel</strong> — testé sur
+      <strong>Minitel 1</strong> (Telic / Alcatel) et <strong>Minitel 2</strong> — en le
       transformant en terminal de dialogue avec une intelligence artificielle.</p>
       <p>On tape sa question sur le clavier d'origine, elle part vers un Raspberry Pi
       caché dans le boîtier, qui interroge un modèle de langage <strong>Mistral</strong>
@@ -89,6 +90,16 @@
         </tbody>
       </table>
       <p class="note">Paramètres série : <strong>1200 bauds, 7 bits, parité paire, 1 stop (7E1)</strong> — la norme Videotex.</p>
+      <p class="note">⚠️ Seules les broches 1, 2 et 3 sont utilisées : laisser les
+      <strong>broches 4 et 5 libres</strong> (la 5 porte une alimentation).</p>
+      <h3>Activation selon le modèle</h3>
+      <ul>
+        <li><strong>Minitel 1</strong> (Telic / Alcatel) : prêt dès l'allumage, aucune manipulation.</li>
+        <li><strong>Minitel 2</strong> : démarre sur son Répertoire. À l'allumage, faire
+        <strong>Fnct + Sommaire</strong> (pour connecter la prise en Vidéotex), puis
+        <strong>Sommaire</strong> pour afficher l'accueil. Éviter <em>Fnct + T A</em>
+        (qui force un mode 80 colonnes défilant).</li>
+      </ul>
     </div>
   </div>
 
@@ -96,8 +107,10 @@
     <h3>💡 Les pièges rencontrés</h3>
     <p><em>Cette section raconte le débogage — à compléter / illustrer avec tes notes.</em></p>
     <ul>
-      <li>Le port DIN n'émet que si le Minitel est passé en mode péri-informatique
-      (<strong>Fnct + T</strong> puis <strong>A</strong>).</li>
+      <li>Sur <strong>Minitel 2</strong>, l'écran démarre sur le Répertoire intégré :
+      tant qu'on n'en sort pas (<strong>Fnct + Sommaire</strong>), la prise n'affiche rien.</li>
+      <li>Un ancien pont entre deux broches du DIN (broche d'alimentation reliée à la masse)
+      bloquait toute réception : seuls 3 fils doivent être câblés.</li>
       <li>Les fils nus sur l'adaptateur font de faux contacts : un branchement propre est essentiel.</li>
       <li>Le mode mosaïque Videotex affiche les images en demi-teintes (tramage), jamais en pixels pleins.</li>
       <li>Le hotspot WiFi ne démarrait pas : le service <code>dnsmasq</code> système
