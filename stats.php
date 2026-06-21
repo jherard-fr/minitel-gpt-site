@@ -3,23 +3,6 @@
 // URL : https://minitel-gpt.herard.com/stats.php?token=VOTRE_TOKEN
 $TOKEN_HASH = '83e78a52158daafa02ae6413b410f4d754e8ae3f4c9ddc7466e356824494c92a';
 
-// ── Diagnostic temporaire (sans exposer les IP brutes) ───────────────────
-if (($_GET['selfcheck'] ?? '') === '1') {
-    header('Content-Type: text/plain; charset=utf-8');
-    $d = __DIR__ . '/data'; $H = [];
-    if (is_file("$d/hits.jsonl")) foreach (file("$d/hits.jsonl", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $l) { $r = json_decode($l, true); if ($r) $H[] = $r; }
-    $wip = 0; $ips = []; $byd = []; $dip = []; $lens = [];
-    foreach ($H as $h) { $ip = $h['ip'] ?? ''; if ($ip) { $wip++; $ips[$ip] = 1; } $j = substr($h['t'] ?? '', 0, 10); if ($j) { $byd[$j] = ($byd[$j] ?? 0) + 1; if ($ip) $dip[$j][$ip] = 1; } }
-    foreach (array_slice(array_keys($ips), 0, 8) as $ip) $lens[] = strlen($ip);
-    echo "ABOUT stats.php selfcheck\n";
-    echo "hits=" . count($H) . "  hits_with_ip=$wip  unique_ips=" . count($ips) . "\n";
-    echo "has_target_ip(88.160.78.52)=" . (isset($ips['88.160.78.52']) ? 'OUI (' . $ips['88.160.78.52'] . ')' : 'non') . "\n";
-    echo "ip_string_lengths(sample)=" . implode(',', $lens) . "  (IPv4<=15, IPv6 plus long)\n";
-    echo "derniers 7 jours (v=pages vues, u=visites uniques) :\n";
-    for ($i = 6; $i >= 0; $i--) { $j = date('Y-m-d', strtotime("-$i days")); echo "  $j  v=" . ($byd[$j] ?? 0) . "  u=" . (isset($dip[$j]) ? count($dip[$j]) : 0) . "\n"; }
-    exit;
-}
-
 $token = $_GET['token'] ?? '';
 if (hash('sha256', $token) !== $TOKEN_HASH) {
     http_response_code(403);
@@ -39,13 +22,34 @@ if (is_file($file)) {
     }
 }
 
-// ── Exclusion de mon IP (case cochée par défaut) ─────────────────────────
-$MY_IPS = ['88.160.78.52'];   // IP(s) à exclure des statistiques
+// ── Exclusion de mes visites (case cochée par défaut) ────────────────────
+$MY_IPS = ['88.160.78.52'];   // IP(s) explicitement exclues
 $base = 'stats.php?token=' . urlencode($token);
 $exclude_on = ($_GET['myip'] ?? '1') !== '0';
+
+// IP du visiteur courant (toi, quand tu ouvres les stats) — détection track.php
+$my_ip = '';
+foreach (['HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'] as $k) {
+    if (!empty($_SERVER[$k])) {
+        $c = trim(explode(',', $_SERVER[$k])[0]);
+        if (filter_var($c, FILTER_VALIDATE_IP)) { $my_ip = $c; break; }
+    }
+}
+
+// Un hit est "à moi" s'il est dans $MY_IPS, ou dans le même réseau que mon IP
+// courante : /64 en IPv6 (gère la rotation d'adresses), exact en IPv4.
+function ip_is_mine($ip, $my_ip, $list) {
+    if ($ip === '') return false;
+    if (in_array($ip, $list, true)) return true;
+    if (!$my_ip) return false;
+    $a = @inet_pton($ip); $b = @inet_pton($my_ip);
+    if ($a === false || $b === false || strlen($a) !== strlen($b)) return false;
+    return strlen($a) === 16 ? substr($a, 0, 8) === substr($b, 0, 8) : $a === $b;
+}
+
 $all_hits = $hits;
 if ($exclude_on) {
-    $hits = array_values(array_filter($all_hits, fn($h) => !in_array($h['ip'] ?? '', $MY_IPS, true)));
+    $hits = array_values(array_filter($all_hits, fn($h) => !ip_is_mine($h['ip'] ?? '', $my_ip, $MY_IPS)));
 }
 $hidden = count($all_hits) - count($hits);
 
@@ -171,7 +175,7 @@ a{color:var(--accent)}
 <label class=excl>
   <input type=checkbox <?= $exclude_on ? 'checked' : '' ?>
     onchange="location.href='<?= $base ?>&myip='+(this.checked?'1':'0')">
-  Exclure mon IP (<?= htmlspecialchars(implode(', ', $MY_IPS)) ?>)<?= $hidden ? ' · ' . $hidden . ' vue' . ($hidden > 1 ? 's' : '') . ' masquée' . ($hidden > 1 ? 's' : '') : '' ?>
+  Exclure mes visites<?= $my_ip ? ' (réseau de ' . htmlspecialchars($my_ip) . ')' : '' ?><?= ' · ' . $hidden . ' vue' . ($hidden > 1 ? 's' : '') . ' masquée' . ($hidden > 1 ? 's' : '') ?>
 </label>
 <div class=kpis>
   <div class=kpi><b><?= $total ?></b><span>pages vues</span></div>
@@ -226,7 +230,7 @@ var DAILY = <?= $daily_json ?>;
     for (var i=0;i<N;i+=step){ s += '<text x='+px(i).toFixed(1)+' y='+(H-8)+' text-anchor=middle font-size=9 fill="#9a9aa4">'+data[i].d.slice(8)+'/'+data[i].d.slice(5,7)+'</text>'; }
     s += '<line id=cur y1='+T+' y2='+(T+ph)+' stroke="#fff" stroke-opacity=.3 style="display:none"/>';
     s += '<circle id=dv r=3.5 fill="#4ecdc4" style="display:none"/><circle id=du r=3.5 fill="#ffd166" style="display:none"/>';
-    s += '<rect id=hit x='+L+' y='+T+' width='+pw+' height='+ph+' fill=transparent/></svg>';
+    s += '<rect id=hit x='+L+' y='+T+' width='+pw+' height='+ph+' fill=none pointer-events=all/></svg>';
     box.innerHTML = s + '<div id=tip></div>';
     var svg=document.getElementById('svgc'), hit=document.getElementById('hit'), tip=document.getElementById('tip'),
         cur=document.getElementById('cur'), dv=document.getElementById('dv'), du=document.getElementById('du');
