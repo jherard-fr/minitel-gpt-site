@@ -86,9 +86,5 @@ if ($code >= 200 && $code < 300) {
         date('c') . " HTTP {$code} {$err} " . substr((string) $resp, 0, 300) . "\n",
         FILE_APPEND | LOCK_EX);
     http_response_code(502);
-    echo json_encode(['ok' => false, 'error' => 'send_failed',
-        'debug' => ['http' => $code, 'curl' => $err,
-                    'resp' => substr((string) $resp, 0, 200),
-                    'key' => ($apiKey ? substr($apiKey, 0, 3) . '…' : 'VIDE'),
-                    'curl_ext' => function_exists('curl_init')]]);
+    echo json_encode(['ok' => false, 'error' => 'send_failed']);
 }
