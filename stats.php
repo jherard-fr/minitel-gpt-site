@@ -65,22 +65,43 @@ foreach ($ips as $ip) {
 if ($new) @file_put_contents($geo_file, json_encode($geo));
 
 // ── Agrégations ──────────────────────────────────────────────────────────
+$PAGE_LABELS = [
+    '/' => 'Accueil', '/index.html' => 'Accueil',
+    '/notice-cablage.html' => 'Câblage pas à pas',
+    '/interface-admin.html' => 'Interface admin',
+    '/github.html' => 'Code GitHub', '/contact.html' => 'Contact',
+];
 $total = count($hits);
 $by_day = $by_browser = $by_os = $by_ref = $by_geo = [];
-$uniq_ip = [];
+$day_ips = $by_page = $uniq_ip = [];
 foreach ($hits as $h) {
     $day = substr($h['t'] ?? '', 0, 10);
-    $by_day[$day] = ($by_day[$day] ?? 0) + 1;
+    if ($day) {
+        $by_day[$day] = ($by_day[$day] ?? 0) + 1;
+        if (!empty($h['ip'])) $day_ips[$day][$h['ip']] = 1;
+    }
     $by_browser[parse_browser($h['ua'] ?? '')] = ($by_browser[parse_browser($h['ua'] ?? '')] ?? 0) + 1;
     $by_os[parse_os($h['ua'] ?? '')] = ($by_os[parse_os($h['ua'] ?? '')] ?? 0) + 1;
     $by_ref[ref_domain($h['ref'] ?? '')] = ($by_ref[ref_domain($h['ref'] ?? '')] ?? 0) + 1;
     $loc = $geo[$h['ip'] ?? ''] ?? '?';
     $by_geo[$loc] = ($by_geo[$loc] ?? 0) + 1;
+    $p = $h['page'] ?? '/'; if ($p === '') $p = '/';
+    $pname = $PAGE_LABELS[$p] ?? $p;
+    $by_page[$pname] = ($by_page[$pname] ?? 0) + 1;
     if (!empty($h['ip'])) $uniq_ip[$h['ip']] = 1;
 }
 krsort($by_day);
-arsort($by_browser); arsort($by_os); arsort($by_ref); arsort($by_geo);
-$days30 = array_slice($by_day, 0, 30, true);
+arsort($by_browser); arsort($by_os); arsort($by_ref); arsort($by_geo); arsort($by_page);
+
+// Séries pour la courbe quotidienne (30 derniers jours, ordre chronologique)
+$chart_days = $chart_views = $chart_visitors = [];
+for ($i = 29; $i >= 0; $i--) {
+    $d = date('Y-m-d', strtotime("-$i days"));
+    $chart_days[] = $d;
+    $chart_views[] = $by_day[$d] ?? 0;
+    $chart_visitors[] = isset($day_ips[$d]) ? count($day_ips[$d]) : 0;
+}
+$today_views = $by_day[date('Y-m-d')] ?? 0;
 
 function table($title, $data, $limit = 12) {
     echo "<div class=card><h2>" . htmlspecialchars($title) . "</h2><table>";
@@ -92,6 +113,37 @@ function table($title, $data, $limit = 12) {
     }
     if (!$data) echo "<tr><td>(aucune donnée)</td><td></td></tr>";
     echo "</table></div>";
+}
+
+function daily_chart($days, $views, $visitors) {
+    $n = count($days);
+    if ($n < 2) return '<p style="color:#9a9aa4">Pas encore assez de données.</p>';
+    $W = 720; $H = 240; $L = 34; $R = 12; $T = 14; $B = 26;
+    $pw = $W - $L - $R; $ph = $H - $T - $B;
+    $max = max(1, max($views), max($visitors));
+    $px = fn($i) => $L + ($pw * $i / ($n - 1));
+    $py = fn($v) => $T + $ph - ($ph * $v / $max);
+    $line = function($arr) use ($px, $py, $n) {
+        $p = [];
+        for ($i = 0; $i < $n; $i++) $p[] = round($px($i), 1) . ',' . round($py($arr[$i]), 1);
+        return implode(' ', $p);
+    };
+    $svg  = "<svg viewBox='0 0 $W $H' style='width:100%;height:auto' xmlns='http://www.w3.org/2000/svg'>";
+    foreach ([0, 0.5, 1] as $f) {              // grille + axe Y
+        $val = (int) round($max * $f); $yy = round($py($val), 1);
+        $svg .= "<line x1='$L' y1='$yy' x2='" . ($W - $R) . "' y2='$yy' stroke='#3a3a42' stroke-width='1'/>";
+        $svg .= "<text x='" . ($L - 6) . "' y='" . ($yy + 3) . "' text-anchor='end' font-size='9' fill='#9a9aa4'>$val</text>";
+    }
+    $area = "$L," . ($T + $ph) . " " . $line($views) . " " . round($px($n - 1), 1) . "," . ($T + $ph);
+    $svg .= "<polygon points='$area' fill='#4ecdc4' opacity='0.12'/>";
+    $svg .= "<polyline points='" . $line($views) . "' fill='none' stroke='#4ecdc4' stroke-width='2'/>";
+    $svg .= "<polyline points='" . $line($visitors) . "' fill='none' stroke='#ffd166' stroke-width='2'/>";
+    $step = max(1, (int) floor($n / 6));        // labels X (~6 dates)
+    for ($i = 0; $i < $n; $i += $step) {
+        $svg .= "<text x='" . round($px($i), 1) . "' y='" . ($H - 8) . "' text-anchor='middle' font-size='9' fill='#9a9aa4'>"
+              . date('d/m', strtotime($days[$i])) . "</text>";
+    }
+    return $svg . "</svg>";
 }
 ?><!DOCTYPE html><html lang=fr><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
@@ -109,16 +161,26 @@ table{width:100%;border-collapse:collapse;font-size:.9em}
 td{padding:5px 6px;border-bottom:1px solid var(--border)}
 td.n{text-align:right;color:var(--accent);width:60px}
 .bar{height:8px;background:var(--accent);border-radius:4px;margin-top:6px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:.82em;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 </style></head><body>
 <h1>📊 Statistiques - MINITEL GPT</h1>
 <div class=kpis>
-  <div class=kpi><b><?= $total ?></b><span>visites totales</span></div>
+  <div class=kpi><b><?= $total ?></b><span>pages vues</span></div>
   <div class=kpi><b><?= count($uniq_ip) ?></b><span>visiteurs uniques (IP)</span></div>
-  <div class=kpi><b><?= $days30 ? reset($days30) : 0 ?></b><span>aujourd'hui</span></div>
+  <div class=kpi><b><?= $today_views ?></b><span>pages vues aujourd'hui</span></div>
+</div>
+<div class=card style="margin-bottom:16px">
+  <h2>Visites &amp; pages vues par jour (30 j)</h2>
+  <?= daily_chart($chart_days, $chart_views, $chart_visitors) ?>
+  <div class=legend>
+    <span><i style="background:#ffd166"></i>Visites (visiteurs uniques / jour)</span>
+    <span><i style="background:#4ecdc4"></i>Pages vues</span>
+  </div>
 </div>
 <div class=grid>
 <?php
-table("Trafic par jour (30 j)", $days30, 30);
+table("Audience par page", $by_page);
 table("Provenance (ville, pays)", $by_geo);
 table("Sites référents", $by_ref);
 table("Navigateurs", $by_browser);
