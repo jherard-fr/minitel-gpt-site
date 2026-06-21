@@ -4,7 +4,7 @@
   --text:#e6edf3; --muted:#8aa;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-y:scroll}
 body{
   margin:0; background:var(--bg); color:var(--text);
   font-family:'Inter',-apple-system,Segoe UI,Roboto,sans-serif; line-height:1.6;
@@ -111,7 +111,8 @@ figcaption{color:var(--muted);font-size:.82em;margin-top:10px;text-align:center}
 .mainnav{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;
   padding:11px 22px;background:rgba(13,13,26,.92);backdrop-filter:blur(8px);
   border-bottom:1px solid var(--border)}
-.mainnav .nav-home{font-weight:800;color:#fff;letter-spacing:.5px}
+.mainnav .nav-home{display:inline-flex;align-items:center;gap:9px;font-weight:800;color:#fff;letter-spacing:.5px;flex:none}
+.mainnav .nav-home img{width:26px;height:26px;display:block;flex:none}
 .mainnav .nav-links{display:flex;flex-wrap:wrap;gap:6px 20px;margin-left:auto;align-items:center}
 .mainnav .nav-links a{color:var(--muted);font-size:.92em;font-weight:600;display:inline-flex;align-items:center;gap:6px}
 .mainnav .nav-links a:hover,.mainnav .nav-links a.active{color:var(--accent)}
@@ -122,6 +123,8 @@ figcaption{color:var(--muted);font-size:.82em;margin-top:10px;text-align:center}
 .icon-link{display:inline-flex;align-items:center;gap:9px;font-weight:700}
 .icon-link svg{width:24px;height:24px;flex:none}
 .li-link{color:#0a66c2}.li-link:hover{color:#3b8fe0}
+.li-inline{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.li-inline svg{width:20px;height:20px;flex:none}
 
 /* Signature auteur */
 .byline{color:var(--muted);font-size:.95em;margin:-4px 0 22px}
