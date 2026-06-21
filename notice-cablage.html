@@ -71,10 +71,9 @@
       </figure>
     </li>
     <li>
-      <p><strong>Repérez les broches utiles au voltmètre.</strong> En mode continuité, identifiez quel fil dénudé correspond à quelle broche de la prise DIN. On cherche les <strong>trois signaux utiles</strong> : <strong>RX</strong>, la masse <strong>GND</strong> et <strong>TX</strong>.</p>
-      <p class="note">Sur la prise péri-informatique du Minitel : <strong>broche&nbsp;1&nbsp;=&nbsp;RX</strong>, <strong>broche&nbsp;2&nbsp;=&nbsp;GND</strong>, <strong>broche&nbsp;3&nbsp;=&nbsp;TX</strong>. Les broches 4 et 5 ne servent pas (la 5 porte une tension d'alimentation) — à laisser de côté.</p>
+      <p><strong>Repérez les broches utiles au voltmètre</strong> (mode continuité) : identifiez quel fil dénudé correspond à quelle broche de la prise. Vous devez repérer les broches <strong>1</strong>, <strong>2</strong> et <strong>5</strong> — arc vers le haut, ce sont le premier et le dernier en bas, et celui du haut — soit <strong>1&nbsp;=&nbsp;RX</strong>, <strong>2&nbsp;=&nbsp;GND</strong> et <strong>5&nbsp;=&nbsp;TX</strong>.</p>
       <figure class="step-fig">
-        <img src="assets/notice/din.JPG" alt="Repérage des broches de la prise DIN" loading="lazy">
+        <img src="assets/notice/din.JPG" alt="Repérage des broches de la prise DIN au voltmètre" loading="lazy">
       </figure>
     </li>
     <li>
@@ -92,7 +91,7 @@
         <thead><tr><th>FTDI</th><th>DIN Minitel</th><th>Rôle</th></tr></thead>
         <tbody>
           <tr><td>TXD</td><td>Broche 1</td><td>Pi → Minitel (RX)</td></tr>
-          <tr><td>RXD</td><td>Broche 3</td><td>Minitel → Pi (TX)</td></tr>
+          <tr><td>RXD</td><td>Broche 5</td><td>Minitel → Pi (TX)</td></tr>
           <tr><td>GND</td><td>Broche 2</td><td>Masse commune</td></tr>
         </tbody>
       </table>
