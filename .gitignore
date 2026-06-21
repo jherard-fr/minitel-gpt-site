@@ -1,0 +1,6 @@
+# Clé API Resend injectée au déploiement depuis le secret GitHub — jamais versionnée
+resend-key.php
+
+# Données locales (stats, logs) — non déployées
+data/
+.ftp-deploy-sync-state.json

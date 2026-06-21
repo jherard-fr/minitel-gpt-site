@@ -4,10 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MINITEL GPT — Un Minitel des années 80 propulsé par l'IA</title>
-<meta name="description" content="Transformer un Minitel (1 ou 2) en terminal de chat IA autonome, via un Raspberry Pi Zero 2 W. Concept, électronique, câblage et logiciel.">
+<meta name="description" content="Transformez un Minitel des années 80 en terminal de chat IA, propulsé par un Raspberry Pi (Zero W, Zero 2 W ou Pi 3) et l'IA Mistral. Tutoriel de câblage pas à pas, interface d'administration web et code open source.">
+<meta name="keywords" content="Minitel, Raspberry Pi, intelligence artificielle, Mistral, Vidéotex, rétro, DIY, chatbot, télématique, Pi Zero W, Pi Zero 2 W">
+<meta name="author" content="Jérôme Hérard">
+<link rel="canonical" href="https://minitel-gpt.herard.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MINITEL GPT">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="MINITEL GPT — un Minitel des années 80 propulsé par l'IA">
+<meta property="og:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral. Câblage, admin web, open source.">
+<meta property="og:url" content="https://minitel-gpt.herard.com/">
+<meta property="og:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MINITEL GPT — un Minitel des années 80 propulsé par l'IA">
+<meta name="twitter:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral.">
+<meta name="twitter:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"MINITEL GPT","url":"https://minitel-gpt.herard.com/","inLanguage":"fr-FR","description":"Un Minitel des années 80 transformé en terminal de chat IA avec un Raspberry Pi et l'IA Mistral.","author":{"@type":"Person","name":"Jérôme Hérard"}}
+</script>
 </head>
 <body>
 
@@ -15,7 +32,7 @@
 <header class="hero">
   <img class="logo" src="assets/logo-minitel-gpt-white.png?v=3" alt="MINITEL GPT">
   <p class="tagline">Un Minitel des années 80,<br>ressuscité en terminal de chat IA.</p>
-  <p class="sub">Raspberry Pi Zero 2 W · liaison série · IA conversationnelle · portail WiFi autonome</p>
+  <p class="sub tags">#Minitel #RaspberryPi #IntelligenceArtificielle #Mistral #Vidéotex #Rétro #DIY #ChatIA #Vintage #Télématique</p>
   <div class="cta">
     <a class="btn btn-primary" href="notice-cablage.html">Câblage pas à pas</a>
     <a class="btn btn-ghost" href="interface-admin.html">Interface d'administration</a>
@@ -93,7 +110,9 @@
 <!-- STACK -->
 <section id="stack" class="alt">
   <h2>Stack technique</h2>
+  <p class="lead">Compatible <strong>Raspberry Pi Zero W</strong>, <strong>Pi Zero 2 W</strong> et <strong>Pi 3</strong> — le Pi Zero W (le moins cher, il tient dans le boîtier) suffit largement.</p>
   <div class="chips">
+    <span>Raspberry Pi Zero W / Zero 2 W / Pi 3</span>
     <span>Raspberry Pi OS Lite</span>
     <span>Python 3</span>
     <span>pyserial</span>
@@ -114,17 +133,68 @@
   <a class="btn btn-ghost" href="https://github.com/jherard-fr/minitel-gpt#readme">Installation / Documentation</a>
 </section>
 
+<!-- CONTACT -->
+<section id="contact" class="alt">
+  <h2>Me contacter</h2>
+  <p class="lead">Une question, l'envie d'une personnalité sur mesure, un projet ? Écrivez-moi.</p>
+  <form id="contactForm" class="contact" novalidate>
+    <div class="field">
+      <label for="cf-name">Nom</label>
+      <input type="text" id="cf-name" name="name" required maxlength="80" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="cf-email">Email</label>
+      <input type="email" id="cf-email" name="email" required maxlength="120" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="cf-msg">Message</label>
+      <textarea id="cf-msg" name="message" required rows="5" maxlength="3000"></textarea>
+    </div>
+    <!-- piège anti-robots : laissé vide par un humain -->
+    <input type="text" name="website" id="cf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+    <button type="submit" class="btn btn-primary" id="cf-submit">Envoyer</button>
+    <p id="cf-status" class="cf-status" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
 </main>
 
 <footer>
   <img src="assets/favicon-32.png" alt="" width="24">
-  <p>MINITEL GPT — un projet de Jérôme Hérard. Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+  <p>MINITEL GPT — un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
 </footer>
 
 <script>
 // Statistiques de visite (collecteur track.php)
 new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)
   + '&p=' + encodeURIComponent(location.pathname) + '&_=' + Date.now();
+
+// Formulaire de contact (envoi via contact.php → Resend)
+(function(){
+  var f = document.getElementById('contactForm');
+  if(!f) return;
+  var st = document.getElementById('cf-status'), btn = document.getElementById('cf-submit');
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    st.textContent = ''; st.className = 'cf-status';
+    if(!f.name.value.trim() || !f.email.value.trim() || !f.message.value.trim()){
+      st.textContent = 'Merci de remplir tous les champs.'; st.classList.add('err'); return;
+    }
+    btn.disabled = true; var lbl = btn.textContent; btn.textContent = 'Envoi…';
+    fetch('contact.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(new FormData(f))
+    })
+    .then(function(r){ return r.json().catch(function(){ return {ok:false}; }); })
+    .then(function(d){
+      if(d.ok){ f.reset(); st.textContent = 'Message envoyé, merci ! Je vous répondrai vite.'; st.classList.add('ok'); }
+      else { st.textContent = 'Oups, l\'envoi a échoué. Réessayez ou écrivez à jerome@herard.com.'; st.classList.add('err'); }
+    })
+    .catch(function(){ st.textContent = 'Erreur réseau. Réessayez plus tard.'; st.classList.add('err'); })
+    .finally(function(){ btn.disabled = false; btn.textContent = lbl; });
+  });
+})();
 </script>
 </body>
 </html>
