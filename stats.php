@@ -191,11 +191,7 @@ a{color:var(--accent)}
       <option value=90>90 jours</option>
     </select>
   </div>
-  <div id=chart style="position:relative"></div>
-  <div class=legend>
-    <span><i style="background:#ffd166"></i>Visites (visiteurs uniques / jour)</span>
-    <span><i style="background:#4ecdc4"></i>Pages vues</span>
-  </div>
+  <div style="position:relative;height:280px"><canvas id=chart></canvas></div>
 </div>
 <?php table("Audience par page", $by_page); ?>
 <div class=grid style="margin-top:16px">
@@ -208,49 +204,41 @@ table("Systèmes d'exploitation", $by_os);
 </div>
 <p style="color:var(--muted);font-size:.8em;margin-top:20px">Géoloc via ip-api.com (cache). Mise à jour à chaque chargement.</p>
 
+<script src="assets/chart.min.js"></script>
 <script>
 var DAILY = <?= $daily_json ?>;
 (function(){
-  var sel = document.getElementById('range'), box = document.getElementById('chart');
-  var W=720,H=240,L=34,R=12,T=14,B=26,pw=W-L-R,ph=H-T-B;
-  function render(n){
-    var data = DAILY.slice(-n), N = data.length;
-    var max = 1; data.forEach(function(p){ max = Math.max(max, p.v, p.u); });
-    function px(i){ return L + (N<2 ? pw/2 : pw*i/(N-1)); }
-    function py(v){ return T + ph - ph*v/max; }
-    function line(k){ return data.map(function(p,i){ return px(i).toFixed(1)+','+py(p[k]).toFixed(1); }).join(' '); }
-    var s = '<svg id=svgc viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">';
-    [0,.5,1].forEach(function(f){ var val=Math.round(max*f), y=py(val).toFixed(1);
-      s += '<line x1='+L+' y1='+y+' x2='+(W-R)+' y2='+y+' stroke="#3a3a42"/>';
-      s += '<text x='+(L-6)+' y='+(+y+3)+' text-anchor=end font-size=9 fill="#9a9aa4">'+val+'</text>'; });
-    s += '<polygon points="'+L+','+(T+ph)+' '+line('v')+' '+px(N-1).toFixed(1)+','+(T+ph)+'" fill="#4ecdc4" opacity=.12/>';
-    s += '<polyline points="'+line('v')+'" fill=none stroke="#4ecdc4" stroke-width=2/>';
-    s += '<polyline points="'+line('u')+'" fill=none stroke="#ffd166" stroke-width=2/>';
-    var step = Math.max(1, Math.floor(N/6));
-    for (var i=0;i<N;i+=step){ s += '<text x='+px(i).toFixed(1)+' y='+(H-8)+' text-anchor=middle font-size=9 fill="#9a9aa4">'+data[i].d.slice(8)+'/'+data[i].d.slice(5,7)+'</text>'; }
-    s += '<line id=cur y1='+T+' y2='+(T+ph)+' stroke="#fff" stroke-opacity=.3 style="display:none"/>';
-    s += '<circle id=dv r=3.5 fill="#4ecdc4" style="display:none"/><circle id=du r=3.5 fill="#ffd166" style="display:none"/>';
-    s += '<rect id=hit x='+L+' y='+T+' width='+pw+' height='+ph+' fill=none pointer-events=all/></svg>';
-    box.innerHTML = s + '<div id=tip></div>';
-    var svg=document.getElementById('svgc'), hit=document.getElementById('hit'), tip=document.getElementById('tip'),
-        cur=document.getElementById('cur'), dv=document.getElementById('dv'), du=document.getElementById('du');
-    hit.addEventListener('mousemove', function(ev){
-      var r = svg.getBoundingClientRect();
-      var i = Math.round(((ev.clientX-r.left)/r.width*W - L) / (N<2?1:pw/(N-1)));
-      if(i<0)i=0; if(i>=N)i=N-1;
-      var p=data[i], X=px(i);
-      cur.setAttribute('x1',X); cur.setAttribute('x2',X); cur.style.display='';
-      dv.setAttribute('cx',X); dv.setAttribute('cy',py(p.v)); dv.style.display='';
-      du.setAttribute('cx',X); du.setAttribute('cy',py(p.u)); du.style.display='';
-      tip.style.display='block';
-      tip.style.left=(X/W*r.width)+'px';
-      tip.style.top=(py(Math.max(p.v,p.u))/H*r.height)+'px';
-      tip.innerHTML='<b>'+p.d.split('-').reverse().join('/')+'</b><br><span style="color:#4ecdc4">'+p.v+' pages vues</span><br><span style="color:#ffd166">'+p.u+' visite'+(p.u>1?'s':'')+'</span>';
-    });
-    hit.addEventListener('mouseleave', function(){ tip.style.display='none'; cur.style.display='none'; dv.style.display='none'; du.style.display='none'; });
+  var el = document.getElementById('chart'), sel = document.getElementById('range'), chart;
+  function build(n){
+    var data = DAILY.slice(-n);
+    var cfg = {
+      type: 'line',
+      data: {
+        labels: data.map(function(p){ return p.d.slice(8) + '/' + p.d.slice(5,7); }),
+        datasets: [
+          { label: 'Pages vues', data: data.map(function(p){ return p.v; }),
+            borderColor: '#4ecdc4', backgroundColor: 'rgba(78,205,196,.15)',
+            fill: true, tension: .25, borderWidth: 2, pointRadius: 2, pointHoverRadius: 5 },
+          { label: 'Visites', data: data.map(function(p){ return p.u; }),
+            borderColor: '#ffd166', backgroundColor: 'transparent',
+            fill: false, tension: .25, borderWidth: 2, pointRadius: 2, pointHoverRadius: 5 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { labels: { color: '#cfcfd6', boxWidth: 14, usePointStyle: true } } },
+        scales: {
+          x: { ticks: { color: '#9a9aa4', maxTicksLimit: 9, autoSkip: true }, grid: { color: 'rgba(58,58,66,.5)' } },
+          y: { beginAtZero: true, ticks: { color: '#9a9aa4', precision: 0 }, grid: { color: 'rgba(58,58,66,.5)' } }
+        }
+      }
+    };
+    if (chart) chart.destroy();
+    chart = new Chart(el, cfg);
   }
-  sel.addEventListener('change', function(){ render(+sel.value); });
-  render(7);
+  sel.addEventListener('change', function(){ build(+this.value); });
+  build(7);
 })();
 </script>
 </body></html>
