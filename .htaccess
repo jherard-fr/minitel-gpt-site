@@ -8,3 +8,22 @@
     Deny from all
   </IfModule>
 </FilesMatch>
+
+# Cache : HTML et CSS toujours revalidés (les mises à jour s'affichent tout de
+# suite), images et vidéo mises en cache (stables / versionnées via ?v=).
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|css|js)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 0 seconds"
+  ExpiresByType application/javascript "access plus 0 seconds"
+  ExpiresByType image/png "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 7 days"
+  ExpiresByType image/svg+xml "access plus 7 days"
+  ExpiresByType video/mp4 "access plus 30 days"
+</IfModule>
