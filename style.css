@@ -82,6 +82,22 @@ table.wire th{background:#16302e;color:var(--accent)}
 ul{padding-left:20px}
 li{margin:5px 0}
 
+/* NOTICE — pas à pas */
+.hero-sub{padding:46px 20px 36px}
+.back{display:inline-block;color:var(--accent);margin-bottom:16px;font-weight:600}
+.page-title{font-size:2.3em;margin:0 0 6px;color:#fff}
+figure{margin:0}
+figure img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);display:block}
+figcaption{color:var(--muted);font-size:.82em;margin-top:8px;text-align:center}
+.steps{list-style:none;padding:0;margin:0;counter-reset:step;display:grid;gap:34px}
+.steps>li{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;position:relative}
+.steps>li::before{counter-increment:step;content:counter(step);position:absolute;top:-15px;left:22px;
+  background:var(--accent);color:#06201d;font-weight:800;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.95em}
+.steps>li p{margin:0 0 0 8px}
+.steps .step-fig{margin-top:16px}
+.buy a{word-break:break-word}
+
 /* FOOTER */
 footer{border-top:1px solid var(--border);text-align:center;padding:30px 20px;color:var(--muted);font-size:.9em}
 footer img{vertical-align:middle;margin-bottom:8px;opacity:.85}
