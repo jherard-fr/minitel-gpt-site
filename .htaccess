@@ -15,7 +15,7 @@
 # Cache : HTML et CSS toujours revalidés (les mises à jour s'affichent tout de
 # suite), images et vidéo mises en cache (stables / versionnées via ?v=).
 <IfModule mod_headers.c>
-  <FilesMatch "\.(html|css|js)$">
+  <FilesMatch "\.(html|css|js|php)$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
 </IfModule>

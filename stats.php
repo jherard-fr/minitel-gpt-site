@@ -22,40 +22,13 @@ if (is_file($file)) {
     }
 }
 
-// ── Filtre d'exclusion d'IP (liste persistée, IPv4 + IPv6) ───────────────
-$all_hits = $hits;            // copie complète, pour la gestion des IP
+// ── Exclusion de mon IP (case cochée par défaut) ─────────────────────────
+$MY_IPS = ['88.160.78.52'];   // IP(s) à exclure des statistiques
 $base = 'stats.php?token=' . urlencode($token);
-
-// IP du visiteur courant (même détection que track.php, derrière proxy)
-$my_ip = '';
-foreach (['HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'] as $k) {
-    if (!empty($_SERVER[$k])) {
-        $cand = trim(explode(',', $_SERVER[$k])[0]);
-        if (filter_var($cand, FILTER_VALIDATE_IP)) { $my_ip = $cand; break; }
-    }
-}
-
-// Liste d'exclusion persistée + ajout / suppression (token déjà validé)
-$excl_file = $dir . '/exclude_ips.json';
-$excl_list = is_file($excl_file) ? (json_decode(file_get_contents($excl_file), true) ?: []) : [];
-if (!empty($_GET['addip']) && filter_var($_GET['addip'], FILTER_VALIDATE_IP) && !in_array($_GET['addip'], $excl_list, true)) {
-    $excl_list[] = $_GET['addip'];
-    @file_put_contents($excl_file, json_encode(array_values($excl_list)));
-}
-if (!empty($_GET['delip'])) {
-    $excl_list = array_values(array_filter($excl_list, fn($ip) => $ip !== $_GET['delip']));
-    @file_put_contents($excl_file, json_encode($excl_list));
-}
-
-// Nombre de hits par IP (données complètes) pour le tableau de gestion
-$by_ip = [];
-foreach ($all_hits as $h) { $ip = $h['ip'] ?? ''; if ($ip) $by_ip[$ip] = ($by_ip[$ip] ?? 0) + 1; }
-arsort($by_ip);
-
-// Application du filtre (case maître, cochée par défaut)
 $exclude_on = ($_GET['myip'] ?? '1') !== '0';
-if ($exclude_on && $excl_list) {
-    $hits = array_values(array_filter($all_hits, fn($h) => !in_array($h['ip'] ?? '', $excl_list, true)));
+$all_hits = $hits;
+if ($exclude_on) {
+    $hits = array_values(array_filter($all_hits, fn($h) => !in_array($h['ip'] ?? '', $MY_IPS, true)));
 }
 $hidden = count($all_hits) - count($hits);
 
@@ -88,7 +61,7 @@ function ref_domain($ref) {
 // ── Géolocalisation des IP (cache + ip-api.com, max 40 nouvelles/charge) ──
 $geo_file = $dir . '/geo.json';
 $geo = is_file($geo_file) ? (json_decode(file_get_contents($geo_file), true) ?: []) : [];
-$ips = array_values(array_unique(array_filter(array_map(fn($h) => $h['ip'] ?? '', $all_hits))));
+$ips = array_values(array_unique(array_filter(array_map(fn($h) => $h['ip'] ?? '', $hits))));
 $new = 0;
 foreach ($ips as $ip) {
     if (isset($geo[$ip]) || $new >= 40) continue;
@@ -181,32 +154,12 @@ a{color:var(--accent)}
 <label class=excl>
   <input type=checkbox <?= $exclude_on ? 'checked' : '' ?>
     onchange="location.href='<?= $base ?>&myip='+(this.checked?'1':'0')">
-  Masquer les IP exclues<?= $hidden ? ' (' . $hidden . ' vue' . ($hidden > 1 ? 's' : '') . ' masquée' . ($hidden > 1 ? 's' : '') . ')' : '' ?>
+  Exclure mon IP (<?= htmlspecialchars(implode(', ', $MY_IPS)) ?>)<?= $hidden ? ' · ' . $hidden . ' vue' . ($hidden > 1 ? 's' : '') . ' masquée' . ($hidden > 1 ? 's' : '') : '' ?>
 </label>
 <div class=kpis>
   <div class=kpi><b><?= $total ?></b><span>pages vues</span></div>
   <div class=kpi><b><?= count($uniq_ip) ?></b><span>visiteurs uniques (IP)</span></div>
   <div class=kpi><b><?= $today_views ?></b><span>pages vues aujourd'hui</span></div>
-</div>
-<div class=card style="margin-bottom:16px">
-  <h2>🚫 Exclure des IP (la tienne, IPv4 et IPv6)</h2>
-  <p style="font-size:.82em;color:var(--muted);margin:0 0 10px">Repère ta ligne (ta ville, beaucoup de vues) et clique « exclure ». Valable pour IPv4 comme IPv6, et mémorisé.</p>
-  <?php if ($excl_list): ?>
-  <p style="font-size:.85em;margin:0 0 8px">Exclues :
-    <?php foreach ($excl_list as $ip): ?><span class=iptag><?= htmlspecialchars($ip) ?> <a href="<?= $base ?>&delip=<?= urlencode($ip) ?>" title="réintégrer">×</a></span> <?php endforeach; ?>
-  </p>
-  <?php endif; ?>
-  <table>
-  <?php $i = 0; foreach ($by_ip as $ip => $c): if ($i++ >= 12) break;
-        $is = in_array($ip, $excl_list, true); ?>
-    <tr>
-      <td><?= htmlspecialchars($ip) ?><?= $ip === $my_ip ? ' <span style="color:var(--accent)">(vous, ici)</span>' : '' ?></td>
-      <td style="color:var(--muted)"><?= htmlspecialchars($geo[$ip] ?? '') ?></td>
-      <td class=n><?= $c ?></td>
-      <td style="text-align:right;width:84px"><?php if ($is): ?><a href="<?= $base ?>&delip=<?= urlencode($ip) ?>">réintégrer</a><?php else: ?><a href="<?= $base ?>&addip=<?= urlencode($ip) ?>">exclure</a><?php endif; ?></td>
-    </tr>
-  <?php endforeach; ?>
-  </table>
 </div>
 <div class=card style="margin-bottom:16px">
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px">
