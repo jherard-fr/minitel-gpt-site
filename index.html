@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MINITEL GPT — Un Minitel des années 80 propulsé par l'IA</title>
+<title>MINITEL GPT - Un Minitel des années 80 propulsé par l'IA</title>
 <meta name="description" content="Transformez un Minitel des années 80 en terminal de chat IA, propulsé par un Raspberry Pi (Zero W, Zero 2 W ou Pi 3) et l'IA Mistral. Tutoriel de câblage pas à pas, interface d'administration web et code open source.">
 <meta name="keywords" content="Minitel, Raspberry Pi, intelligence artificielle, Mistral, Vidéotex, rétro, DIY, chatbot, télématique, Pi Zero W, Pi Zero 2 W">
 <meta name="author" content="Jérôme Hérard">
@@ -11,12 +11,12 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MINITEL GPT">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:title" content="MINITEL GPT — un Minitel des années 80 propulsé par l'IA">
+<meta property="og:title" content="MINITEL GPT - un Minitel des années 80 propulsé par l'IA">
 <meta property="og:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral. Câblage, admin web, open source.">
 <meta property="og:url" content="https://minitel-gpt.herard.com/">
 <meta property="og:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MINITEL GPT — un Minitel des années 80 propulsé par l'IA">
+<meta name="twitter:title" content="MINITEL GPT - un Minitel des années 80 propulsé par l'IA">
 <meta name="twitter:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral.">
 <meta name="twitter:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -28,16 +28,21 @@
 </head>
 <body>
 
+<nav class="mainnav">
+  <a class="nav-home" href="index.html">MINITEL&nbsp;GPT</a>
+  <div class="nav-links">
+    <a href="notice-cablage.html">Câblage pas à pas</a>
+    <a href="interface-admin.html">Interface d'administration</a>
+    <a href="github.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.438 9.63 8.205 11.19.6.11.82-.26.82-.58 0-.29-.01-1.04-.015-2.04-3.338.72-4.042-1.61-4.042-1.61-.546-1.38-1.333-1.75-1.333-1.75-1.09-.74.083-.73.083-.73 1.205.085 1.84 1.24 1.84 1.24 1.07 1.83 2.807 1.3 3.492.99.108-.78.42-1.3.762-1.6-2.665-.3-5.466-1.33-5.466-5.93 0-1.31.469-2.38 1.236-3.22-.124-.3-.535-1.52.117-3.18 0 0 1.008-.32 3.3 1.23a11.5 11.5 0 0 1 3.003-.4c1.02.005 2.047.138 3.006.4 2.29-1.55 3.297-1.23 3.297-1.23.653 1.66.242 2.88.118 3.18.77.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.625-5.479 5.92.43.37.823 1.1.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .32.216.7.825.58C20.565 21.91 24 17.49 24 12.29 24 5.78 18.627.5 12 .5z"/></svg> Code GitHub</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
 <!-- HERO -->
 <header class="hero">
   <img class="logo" src="assets/logo-minitel-gpt-white.png?v=3" alt="MINITEL GPT">
-  <p class="tagline">Un Minitel des années 80,<br>ressuscité en terminal de chat IA.</p>
-  <p class="sub tags">#Minitel #RaspberryPi #IntelligenceArtificielle #Mistral #Vidéotex #Rétro #DIY #ChatIA #Vintage #Télématique</p>
-  <div class="cta">
-    <a class="btn btn-primary" href="notice-cablage.html">Câblage pas à pas</a>
-    <a class="btn btn-ghost" href="interface-admin.html">Interface d'administration</a>
-    <a class="btn btn-ghost" href="https://github.com/jherard-fr/minitel-gpt">Code GitHub</a>
-  </div>
+  <p class="tagline">Un Minitel des années 80<br>ressuscité en terminal de chat IA</p>
+  <p class="sub tags">#Minitel #RaspberryPi #IntelligenceArtificielle #MistralAI<br>#Vidéotex #Rétro #DIY #ChatIA #Vintage #Télématique</p>
 </header>
 
 <main>
@@ -47,26 +52,18 @@
   <h2>Le concept</h2>
   <div class="two-col">
     <div>
-      <p>MINITEL GPT redonne vie à un <strong>Minitel</strong> — testé sur
-      <strong>Minitel 1</strong> (Telic / Alcatel) et <strong>Minitel 2</strong> — en le
-      transformant en terminal de dialogue avec une intelligence artificielle.</p>
-      <p>On tape sa question sur le clavier d'origine, elle part vers un Raspberry Pi
-      qui interroge un modèle de langage <strong>Mistral</strong>
-      et renvoie la réponse — affichée à l'écran cathodique, à 1200 bauds, comme en 1985.</p>
-      <p>La personnalité de l'assistant est entièrement configurable. Dans notre exemple,
-      la « personnalité » du Minitel est <strong>bloquée dans les années 80</strong> : elle
-      ne connaît rien après le 31 décembre 1989 et reste imperméable à toute tentative de
-      la sortir de l'époque — parfaite pour une fête d'anniversaire à thème. Vous pouvez,
-      via l'interface d'administration, créer la personnalité de votre choix pour vos
-      événements perso ou pro, ou pour vos enfants.</p>
+      <p>MINITEL GPT redonne vie à un <strong>Minitel</strong> en le transformant en terminal de dialogue avec une intelligence artificielle.</p>
+      <p>Un outil parfait pour animer vos événements perso ou pro, ou pour vos enfants : vous choisissez les messages de personnalisation de l'interface, vous définissez une « personnalité » pour les discussions, vous ajoutez des fichiers qui nourrissent les dialogues avec vos propres contenus, et c'est parti !</p>
+      <p>La réalisation de ce dispositif prend environ une heure quand on a tous les matériels et outils. Nous vous proposons aussi de vous fournir, en location, des dispositifs clé en main personnalisés selon vos besoins : <a href="contact.html">n'hésitez pas à nous contacter</a>.</p>
+      <p><a class="icon-link li-link" href="https://www.linkedin.com/posts/jerome-herard_mistralai-opensource-minitel-ugcPost-7470582757946187777-uWxs" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg> Voir le projet sur LinkedIn</a></p>
     </div>
     <figure>
       <video class="concept-video" controls preload="metadata" playsinline>
         <source src="assets/minitel-gpt.mp4" type="video/mp4">
-        Votre navigateur ne lit pas les vidéos HTML5 —
+        Votre navigateur ne lit pas les vidéos HTML5 -
         <a href="assets/minitel-gpt.mp4">télécharger la vidéo</a>.
       </video>
-      <figcaption>MINITEL GPT en action — cliquez sur ▶ pour lancer la vidéo.</figcaption>
+      <figcaption>MINITEL GPT en action - cliquez sur ▶ pour lancer la vidéo.</figcaption>
     </figure>
   </div>
 </section>
@@ -81,14 +78,11 @@
     <div class="placeholder"><span>📷 Capture 3</span><small>Le Minitel ouvert, le Raspberry Pi à l'intérieur</small></div>
     <div class="placeholder"><span>📷 Capture 4</span><small>L'interface web d'administration</small></div>
   </div>
-  <p class="note">Pour ajouter une image : dépose le fichier dans <code>assets/</code>
-  et remplace le bloc « placeholder » correspondant dans <code>index.html</code>.</p>
 </section>
 
 <!-- ARCHITECTURE -->
 <section id="archi">
   <h2>Architecture logicielle</h2>
-  <p class="lead">Trois services autonomes orchestrés par systemd sur le Raspberry Pi.</p>
   <div class="cards">
     <div class="card">
       <h3>🖥 minitel-chatgpt</h3>
@@ -100,7 +94,7 @@
       <h3>📡 wifi-manager</h3>
       <p>Connexion autonome façon objet connecté : rejoint un réseau connu, ou bascule
       en <strong>hotspot ouvert</strong> avec portail captif pour configurer le WiFi du
-      lieu — sans clavier ni écran externe.</p>
+      lieu - sans clavier ni écran externe.</p>
     </div>
     <div class="card">
       <h3>⚙ admin-ui</h3>
@@ -114,7 +108,7 @@
 <!-- STACK -->
 <section id="stack" class="alt">
   <h2>Stack technique</h2>
-  <p class="lead">Compatible <strong>Raspberry Pi Zero W</strong>, <strong>Pi Zero 2 W</strong> et <strong>Pi 3</strong> — le Pi Zero W (le moins cher, il tient dans le boîtier) suffit largement.</p>
+  <p class="lead">Compatible <strong>Raspberry Pi Zero W</strong>, <strong>Pi Zero 2 W</strong> et <strong>Pi 3</strong> - le Pi Zero W (le moins cher, il tient dans le boîtier) suffit largement.</p>
   <div class="chips">
     <span>Raspberry Pi Zero W / Zero 2 W / Pi 3</span>
     <span>Raspberry Pi OS Lite</span>
@@ -129,78 +123,17 @@
   </div>
 </section>
 
-<!-- CTA FINAL -->
-<section id="code" class="center">
-  <h2>Le projet est open source</h2>
-  <p class="lead">Tout le code, les services et la notice d'installation complète sont sur GitHub.</p>
-  <a class="btn btn-primary" href="https://github.com/jherard-fr/minitel-gpt">github.com/jherard-fr/minitel-gpt</a>
-  <a class="btn btn-ghost" href="https://github.com/jherard-fr/minitel-gpt#readme">Installation / Documentation</a>
-  <a class="btn btn-ghost" href="https://www.linkedin.com/posts/jerome-herard_mistralai-opensource-minitel-ugcPost-7470582757946187777-uWxs" target="_blank" rel="noopener">💼 Le post LinkedIn</a>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="alt">
-  <h2>Me contacter</h2>
-  <p class="lead">Une question, l'envie d'une personnalité sur mesure, un projet ? Écrivez-moi.</p>
-  <form id="contactForm" class="contact" novalidate>
-    <div class="field">
-      <label for="cf-name">Nom</label>
-      <input type="text" id="cf-name" name="name" required maxlength="80" autocomplete="name">
-    </div>
-    <div class="field">
-      <label for="cf-email">Email</label>
-      <input type="email" id="cf-email" name="email" required maxlength="120" autocomplete="email">
-    </div>
-    <div class="field">
-      <label for="cf-msg">Message</label>
-      <textarea id="cf-msg" name="message" required rows="5" maxlength="3000"></textarea>
-    </div>
-    <!-- piège anti-robots : laissé vide par un humain -->
-    <input type="text" name="website" id="cf-hp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
-    <button type="submit" class="btn btn-primary" id="cf-submit">Envoyer</button>
-    <p id="cf-status" class="cf-status" role="status" aria-live="polite"></p>
-  </form>
-</section>
-
 </main>
 
 <footer>
   <img src="assets/favicon-32.png" alt="" width="24">
-  <p>MINITEL GPT — un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+  <p>MINITEL GPT - un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
 </footer>
 
 <script>
 // Statistiques de visite (collecteur track.php)
 new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)
   + '&p=' + encodeURIComponent(location.pathname) + '&_=' + Date.now();
-
-// Formulaire de contact (envoi via contact.php → Resend)
-(function(){
-  var f = document.getElementById('contactForm');
-  if(!f) return;
-  var st = document.getElementById('cf-status'), btn = document.getElementById('cf-submit');
-  f.addEventListener('submit', function(e){
-    e.preventDefault();
-    st.textContent = ''; st.className = 'cf-status';
-    if(!f.name.value.trim() || !f.email.value.trim() || !f.message.value.trim()){
-      st.textContent = 'Merci de remplir tous les champs.'; st.classList.add('err'); return;
-    }
-    btn.disabled = true; var lbl = btn.textContent; btn.textContent = 'Envoi…';
-    fetch('contact.php', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams(new FormData(f))
-    })
-    .then(function(r){ return r.json().catch(function(){ return {ok:false}; }); })
-    .then(function(d){
-      if(d.ok){ f.reset(); st.textContent = 'Message envoyé, merci ! Je vous répondrai vite.'; st.classList.add('ok'); }
-      else if(d.error === 'rate'){ st.textContent = 'Doucement ! Patientez une minute avant d\'envoyer un nouveau message.'; st.classList.add('err'); }
-      else { st.textContent = 'Oups, l\'envoi a échoué. Réessayez ou écrivez à jerome@herard.com.'; st.classList.add('err'); }
-    })
-    .catch(function(){ st.textContent = 'Erreur réseau. Réessayez plus tard.'; st.classList.add('err'); })
-    .finally(function(){ btn.disabled = false; btn.textContent = lbl; });
-  });
-})();
 </script>
 </body>
 </html>

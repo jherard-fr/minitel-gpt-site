@@ -1,5 +1,5 @@
 <?php
-// Tableau de bord des statistiques — accès protégé par token.
+// Tableau de bord des statistiques - accès protégé par token.
 // URL : https://minitel-gpt.herard.com/stats.php?token=VOTRE_TOKEN
 $TOKEN_HASH = '83e78a52158daafa02ae6413b410f4d754e8ae3f4c9ddc7466e356824494c92a';
 
@@ -95,7 +95,7 @@ function table($title, $data, $limit = 12) {
 }
 ?><!DOCTYPE html><html lang=fr><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<title>Stats — MINITEL GPT</title>
+<title>Stats - MINITEL GPT</title>
 <style>
 :root{--accent:#4ecdc4;--bg:#1b1b1f;--card:#26262b;--border:#3a3a42;--muted:#9a9aa4}
 *{box-sizing:border-box}body{background:var(--bg);color:#e6e6e6;font-family:'Courier New',monospace;margin:0;padding:20px}
@@ -110,7 +110,7 @@ td{padding:5px 6px;border-bottom:1px solid var(--border)}
 td.n{text-align:right;color:var(--accent);width:60px}
 .bar{height:8px;background:var(--accent);border-radius:4px;margin-top:6px}
 </style></head><body>
-<h1>📊 Statistiques — MINITEL GPT</h1>
+<h1>📊 Statistiques - MINITEL GPT</h1>
 <div class=kpis>
   <div class=kpi><b><?= $total ?></b><span>visites totales</span></div>
   <div class=kpi><b><?= count($uniq_ip) ?></b><span>visiteurs uniques (IP)</span></div>

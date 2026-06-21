@@ -1,5 +1,5 @@
 <?php
-// Collecteur de visites — enregistre une ligne JSON par hit dans data/hits.jsonl
+// Collecteur de visites - enregistre une ligne JSON par hit dans data/hits.jsonl
 $dir = __DIR__ . '/data';
 if (!is_dir($dir)) @mkdir($dir, 0775, true);
 

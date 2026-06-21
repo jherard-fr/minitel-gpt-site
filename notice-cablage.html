@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Notice de câblage — relier un Minitel à un Raspberry Pi | MINITEL GPT</title>
+<title>Notice de câblage - relier un Minitel à un Raspberry Pi | MINITEL GPT</title>
 <meta name="description" content="Notice pas à pas pour câbler un Minitel à un Raspberry Pi (Zero W, Zero 2 W ou Pi 3) via un adaptateur FTDI : matériel, dénudage, repérage des plots DIN, branchements.">
 <meta name="author" content="Jérôme Hérard">
 <link rel="canonical" href="https://minitel-gpt.herard.com/notice-cablage.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="MINITEL GPT">
 <meta property="og:locale" content="fr_FR">
-<meta property="og:title" content="Notice de câblage — relier un Minitel à un Raspberry Pi">
+<meta property="og:title" content="Notice de câblage - relier un Minitel à un Raspberry Pi">
 <meta property="og:description" content="Le tutoriel pas à pas : matériel, dénudage, repérage des plots DIN, branchement du FTDI au Raspberry Pi.">
 <meta property="og:url" content="https://minitel-gpt.herard.com/notice-cablage.html">
 <meta property="og:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Notice de câblage — relier un Minitel à un Raspberry Pi">
+<meta name="twitter:title" content="Notice de câblage - relier un Minitel à un Raspberry Pi">
 <meta name="twitter:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
@@ -26,8 +26,17 @@
 </head>
 <body>
 
+<nav class="mainnav">
+  <a class="nav-home" href="index.html">MINITEL&nbsp;GPT</a>
+  <div class="nav-links">
+    <a href="notice-cablage.html" class="active">Câblage pas à pas</a>
+    <a href="interface-admin.html">Interface d'administration</a>
+    <a href="github.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.438 9.63 8.205 11.19.6.11.82-.26.82-.58 0-.29-.01-1.04-.015-2.04-3.338.72-4.042-1.61-4.042-1.61-.546-1.38-1.333-1.75-1.333-1.75-1.09-.74.083-.73.083-.73 1.205.085 1.84 1.24 1.84 1.24 1.07 1.83 2.807 1.3 3.492.99.108-.78.42-1.3.762-1.6-2.665-.3-5.466-1.33-5.466-5.93 0-1.31.469-2.38 1.236-3.22-.124-.3-.535-1.52.117-3.18 0 0 1.008-.32 3.3 1.23a11.5 11.5 0 0 1 3.003-.4c1.02.005 2.047.138 3.006.4 2.29-1.55 3.297-1.23 3.297-1.23.653 1.66.242 2.88.118 3.18.77.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.625-5.479 5.92.43.37.823 1.1.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .32.216.7.825.58C20.565 21.91 24 17.49 24 12.29 24 5.78 18.627.5 12 .5z"/></svg> Code GitHub</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
 <header class="hero hero-sub">
-  <a class="back" href="index.html">← Retour au projet</a>
   <h1 class="page-title">Notice de câblage</h1>
   <p class="tagline">Relier un Minitel à un Raspberry Pi, pas à pas.</p>
   <p class="sub">Comptez une bonne heure, un fer à souder n'est même pas obligatoire.</p>
@@ -42,7 +51,7 @@
   <div class="two-col">
     <div>
       <ul>
-        <li>un <strong>Raspberry Pi Zero W</strong> (ou Zero 2 W, ou 3 — plus puissants mais plus chers) et un <strong>adaptateur FTDI</strong> ;</li>
+        <li>un <strong>Raspberry Pi Zero W</strong> (ou Zero 2 W, ou 3 - plus puissants mais plus chers) et un <strong>adaptateur FTDI</strong> ;</li>
         <li>quelques <strong>outils</strong> : un voltmètre, une pince à dénuder pour petits fils, des <strong>câbles Dupont</strong> ;</li>
         <li>un vieux <strong>câble audio à fiche DIN ronde</strong> (5 broches) à sacrifier ;</li>
         <li>idéalement des <strong>Wago Inline</strong> (connecteurs rapides) pour les raccords.</li>
@@ -62,10 +71,10 @@
   <div class="callout buy">
     <h3>🛒 Où trouver le matériel</h3>
     <ul>
-      <li>Le Raspberry complet (câbles, carte micro SD, boîtier) — kit <strong>Starter</strong>, livraison rapide et bon tarif :<br>
-        <a href="https://www.kubii.com/fr/kits-nano-ordinateurs/2077-899-kit-pi-zero-w-kubii-3272496009509.html#/selectionnez_votre_kit-starter_16_go" target="_blank" rel="noopener">kubii.com — Kit Pi Zero W Starter</a></li>
+      <li>Le Raspberry complet (câbles, carte micro SD, boîtier) - kit <strong>Starter</strong>, livraison rapide et bon tarif :<br>
+        <a href="https://www.kubii.com/fr/kits-nano-ordinateurs/2077-899-kit-pi-zero-w-kubii-3272496009509.html#/selectionnez_votre_kit-starter_16_go" target="_blank" rel="noopener">kubii.com - Kit Pi Zero W Starter</a></li>
       <li>Le reste (FTDI, outils, connecteurs) dans cette liste publique :<br>
-        <a href="https://www.amazon.fr/hz/wishlist/ls/1VN1QRIAYHR33?ref_=wl_share" target="_blank" rel="noopener">Liste Amazon — matériel MINITEL GPT</a></li>
+        <a href="https://www.amazon.fr/hz/wishlist/ls/1VN1QRIAYHR33?ref_=wl_share" target="_blank" rel="noopener">Liste Amazon - matériel MINITEL GPT</a></li>
     </ul>
   </div>
 </section>
@@ -77,7 +86,7 @@
 
   <ol class="steps">
     <li>
-      <p><strong>Coupez le câble audio en deux</strong>, à la moitié de sa longueur — ça vous en fera deux, un de secours&nbsp;!</p>
+      <p><strong>Coupez le câble audio en deux</strong>, à la moitié de sa longueur - ça vous en fera deux, un de secours&nbsp;!</p>
     </li>
     <li>
       <p><strong>Dénudez les petits fils.</strong> Utilisez le calibre <strong>0,4 ou 0,5&nbsp;mm</strong> de la pince (ça dépend de votre câble). Attention, ces fils sont minuscules et fragiles.</p>
@@ -86,7 +95,7 @@
       </figure>
     </li>
     <li>
-      <p><strong>Repérez les broches utiles au voltmètre</strong> (mode continuité) : identifiez quel fil dénudé correspond à quelle broche de la prise. Vous cherchez les trois signaux utiles — <strong>1&nbsp;=&nbsp;RX</strong>, <strong>2&nbsp;=&nbsp;GND</strong> et <strong>3&nbsp;=&nbsp;TX</strong>. Les broches 4 et 5 ne servent pas (la 5 porte une tension d'alimentation), à laisser de côté.</p>
+      <p><strong>Repérez les broches utiles au voltmètre</strong> (mode continuité) : identifiez quel fil dénudé correspond à quelle broche de la prise. Vous cherchez les trois signaux utiles - <strong>1&nbsp;=&nbsp;RX</strong>, <strong>2&nbsp;=&nbsp;GND</strong> et <strong>3&nbsp;=&nbsp;TX</strong>. Les broches 4 et 5 ne servent pas (la 5 porte une tension d'alimentation), à laisser de côté.</p>
       <figure class="step-fig">
         <img src="assets/notice/din.JPG" alt="Repérage des broches de la prise DIN au voltmètre" loading="lazy">
       </figure>
@@ -95,13 +104,13 @@
       <p><strong>Coupez les fils inutiles</strong>, ceux qui ne correspondent pas à une broche utile. Il vous reste donc <strong>3 fils</strong> : RX, GND, TX.</p>
     </li>
     <li>
-      <p><strong>Raccordez côté Dupont.</strong> Vous pouvez sertir des cosses Dupont pour faire pro, mais c'est un peu galère. Mon conseil : de petits <strong>Wago Inline</strong>, rapides et sans effort — en dénudant un câble Dupont pour n'en garder que le côté femelle.</p>
+      <p><strong>Raccordez côté Dupont.</strong> Vous pouvez sertir des cosses Dupont pour faire pro, mais c'est un peu galère. Mon conseil : de petits <strong>Wago Inline</strong>, rapides et sans effort, en dénudant un câble Dupont pour n'en garder que le côté femelle. Une petite astuce que j'utilise : je mets toujours un câble dans les tons <strong>rouge pour le RX</strong> (R pour <em>red</em>, facile à retenir) et dans les tons <strong>jaune pour le GND</strong> - ainsi plus besoin de retester plusieurs fois parce qu'on a oublié quel câble remplit quelle fonction.</p>
       <figure class="step-fig">
         <img src="assets/notice/cablage_etape_1.JPG" alt="Raccord des fils avec connecteurs Wago Inline et câbles Dupont" loading="lazy">
       </figure>
     </li>
     <li>
-      <p><strong>Branchez les Dupont sur le FTDI</strong> en vous repérant aux sigles imprimés (TXD, RXD, GND) — voir le tableau ci-dessous.</p>
+      <p><strong>Branchez les Dupont sur le FTDI</strong> en vous repérant aux sigles imprimés (TXD, RXD, GND) - voir le tableau ci-dessous.</p>
       <table class="wire">
         <thead><tr><th>FTDI</th><th>DIN Minitel</th><th>Rôle</th></tr></thead>
         <tbody>
@@ -148,7 +157,7 @@
 
 <footer>
   <img src="assets/favicon-32.png" alt="" width="24">
-  <p>MINITEL GPT — un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+  <p>MINITEL GPT - un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
 </footer>
 
 <script>

@@ -86,7 +86,7 @@ $payload = [
     'from'     => 'MINITEL GPT <onboarding@resend.dev>',
     'to'       => ['jerome@herard.com'],
     'reply_to' => $email,
-    'subject'  => 'Contact MINITEL GPT — ' . mb_substr($name, 0, 60),
+    'subject'  => 'Contact MINITEL GPT - ' . mb_substr($name, 0, 60),
     'html'     => $html,
     'text'     => $text,
 ];

@@ -82,7 +82,7 @@ table.wire th{background:#16302e;color:var(--accent)}
 ul{padding-left:20px}
 li{margin:5px 0}
 
-/* NOTICE — pas à pas */
+/* NOTICE - pas à pas */
 .hero-sub{padding:46px 20px 36px}
 .back{display:inline-block;color:var(--accent);margin-bottom:16px;font-weight:600}
 .page-title{font-size:2.3em;margin:0 0 6px;color:#fff}
@@ -106,6 +106,29 @@ figcaption{color:var(--muted);font-size:.82em;margin-top:10px;text-align:center}
 
 /* HASHTAGS (hero) */
 .sub.tags{color:var(--accent);opacity:.85;font-size:.95em;line-height:1.9;max-width:640px}
+
+/* MENU principal */
+.mainnav{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;
+  padding:11px 22px;background:rgba(13,13,26,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border)}
+.mainnav .nav-home{font-weight:800;color:#fff;letter-spacing:.5px}
+.mainnav .nav-links{display:flex;flex-wrap:wrap;gap:6px 20px;margin-left:auto;align-items:center}
+.mainnav .nav-links a{color:var(--muted);font-size:.92em;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.mainnav .nav-links a:hover,.mainnav .nav-links a.active{color:var(--accent)}
+.mainnav .nav-links svg{width:17px;height:17px}
+@media(max-width:660px){.mainnav{justify-content:center;gap:6px 16px}.mainnav .nav-links{margin-left:0;justify-content:center}}
+
+/* Liens à icône (LinkedIn, GitHub) */
+.icon-link{display:inline-flex;align-items:center;gap:9px;font-weight:700}
+.icon-link svg{width:24px;height:24px;flex:none}
+.li-link{color:#0a66c2}.li-link:hover{color:#3b8fe0}
+
+/* Signature auteur */
+.byline{color:var(--muted);font-size:.95em;margin:-4px 0 22px}
+.byline strong{color:var(--text)}
+
+/* Titre avec logo */
+h1 .gh-mark,h2 .gh-mark{width:30px;height:30px;vertical-align:-5px;margin-right:8px}
 
 /* VIDEO (concept) */
 .concept-video{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--border);background:#000}
