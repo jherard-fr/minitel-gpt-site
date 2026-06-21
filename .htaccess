@@ -1,5 +1,8 @@
-# Bloque l'accès web aux fichiers de données des statistiques
-<FilesMatch "(hits\.jsonl|geo\.json)$">
+# Bloque tout accès web au dossier de données (hits, géoloc, IP exclues, logs…)
+<IfModule mod_alias.c>
+  RedirectMatch 403 ^/data/
+</IfModule>
+<FilesMatch "(hits\.jsonl|geo\.json|exclude_ips\.json|contact-errors\.log|rl_.*\.txt)$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
