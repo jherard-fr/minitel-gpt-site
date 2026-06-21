@@ -14,12 +14,12 @@
 <!-- HERO -->
 <header class="hero">
   <img class="logo" src="assets/logo-minitel-gpt-white.png?v=3" alt="MINITEL GPT">
-  <p class="tagline">Un Minitel des années 80, ressuscité en terminal de chat IA.</p>
+  <p class="tagline">Un Minitel des années 80,<br>ressuscité en terminal de chat IA.</p>
   <p class="sub">Raspberry Pi Zero 2 W · liaison série · IA conversationnelle · portail WiFi autonome</p>
   <div class="cta">
-    <a class="btn btn-primary" href="https://github.com/jherard-fr/minitel-gpt">Voir le code</a>
-    <a class="btn btn-ghost" href="https://github.com/jherard-fr/minitel-gpt#readme">Installation / Documentation</a>
-    <a class="btn btn-ghost" href="#concept">Découvrir le projet</a>
+    <a class="btn btn-primary" href="notice-cablage.html">Câblage pas à pas</a>
+    <a class="btn btn-ghost" href="interface-admin.html">Interface d'administration</a>
+    <a class="btn btn-ghost" href="https://github.com/jherard-fr/minitel-gpt">Code GitHub</a>
   </div>
 </header>
 
@@ -34,12 +34,14 @@
       <strong>Minitel 1</strong> (Telic / Alcatel) et <strong>Minitel 2</strong> — en le
       transformant en terminal de dialogue avec une intelligence artificielle.</p>
       <p>On tape sa question sur le clavier d'origine, elle part vers un Raspberry Pi
-      caché dans le boîtier, qui interroge un modèle de langage <strong>Mistral</strong>
+      qui interroge un modèle de langage <strong>Mistral</strong>
       et renvoie la réponse — affichée à l'écran cathodique, à 1200 bauds, comme en 1985.</p>
-      <p>La personnalité de l'assistant est entièrement configurable. La version phare
-      est <strong>bloquée dans les années 80</strong> : elle ne connaît rien après le
-      31 décembre 1989 et reste imperméable à toute tentative de la sortir de l'époque —
-      parfaite pour une fête d'anniversaire à thème.</p>
+      <p>La personnalité de l'assistant est entièrement configurable. Dans notre exemple,
+      la « personnalité » du Minitel est <strong>bloquée dans les années 80</strong> : elle
+      ne connaît rien après le 31 décembre 1989 et reste imperméable à toute tentative de
+      la sortir de l'époque — parfaite pour une fête d'anniversaire à thème. Vous pouvez,
+      via l'interface d'administration, créer la personnalité de votre choix pour vos
+      événements perso ou pro, ou pour vos enfants.</p>
     </div>
     <div class="placeholder">
       <span>📷 Photo à venir</span>
@@ -62,69 +64,8 @@
   et remplace le bloc « placeholder » correspondant dans <code>index.html</code>.</p>
 </section>
 
-<!-- ELECTRONIQUE -->
-<section id="electronique">
-  <h2>Électronique &amp; câblage</h2>
-  <p class="lead">Le pont entre 2025 et 1982 : une liaison série sur le port DIN « péri-informatique » du Minitel.</p>
-
-  <div class="two-col">
-    <figure>
-      <img src="assets/notice/resultat.JPG" alt="Le Raspberry Pi relié au FTDI, prêt à brancher au Minitel" loading="lazy">
-      <figcaption>Le montage terminé. <a href="notice-cablage.html">Voir la notice de câblage pas à pas →</a></figcaption>
-    </figure>
-    <div>
-      <h3>Le matériel</h3>
-      <ul>
-        <li><strong>Raspberry Pi Zero 2 W</strong> — le cerveau, dans le boîtier</li>
-        <li><strong>Adaptateur USB-série FTDI FT232RL</strong> (réglé en 5 V)</li>
-        <li><strong>Câble OTG micro-USB</strong> pour relier le FTDI au Pi</li>
-        <li>3 fils vers la <strong>prise DIN 5 broches</strong> du Minitel</li>
-      </ul>
-      <h3>Câblage série</h3>
-      <table class="wire">
-        <thead><tr><th>FTDI</th><th>DIN Minitel</th><th>Rôle</th></tr></thead>
-        <tbody>
-          <tr><td>TXD</td><td>Broche 1</td><td>Pi → Minitel (RX)</td></tr>
-          <tr><td>RXD</td><td>Broche 3</td><td>Minitel → Pi (TX)</td></tr>
-          <tr><td>GND</td><td>Broche 2</td><td>Masse commune</td></tr>
-        </tbody>
-      </table>
-      <p class="note">Paramètres série : <strong>1200 bauds, 7 bits, parité paire, 1 stop (7E1)</strong> — la norme Videotex.</p>
-      <p class="note">⚠️ Seules les broches 1, 2 et 3 sont utilisées : laisser les
-      <strong>broches 4 et 5 libres</strong> (la 5 porte une alimentation).</p>
-      <h3>Activation selon le modèle</h3>
-      <ul>
-        <li><strong>Minitel 1</strong> (Telic / Alcatel) : prêt dès l'allumage, aucune manipulation.</li>
-        <li><strong>Minitel 2</strong> : démarre sur son Répertoire. À l'allumage, faire
-        <strong>Fnct + Sommaire</strong> (pour connecter la prise en Vidéotex), puis
-        <strong>Sommaire</strong> pour afficher l'accueil. Éviter <em>Fnct + T A</em>
-        (qui force un mode 80 colonnes défilant).</li>
-      </ul>
-    </div>
-  </div>
-
-  <p style="text-align:center;margin-top:32px">
-    <a class="btn btn-primary" href="notice-cablage.html">📔 Notice de câblage pas à pas</a>
-  </p>
-
-  <div class="callout">
-    <h3>💡 Les pièges rencontrés</h3>
-    <p><em>Cette section raconte le débogage — à compléter / illustrer avec tes notes.</em></p>
-    <ul>
-      <li>Sur <strong>Minitel 2</strong>, l'écran démarre sur le Répertoire intégré :
-      tant qu'on n'en sort pas (<strong>Fnct + Sommaire</strong>), la prise n'affiche rien.</li>
-      <li>Un ancien pont entre deux broches du DIN (broche d'alimentation reliée à la masse)
-      bloquait toute réception : seuls 3 fils doivent être câblés.</li>
-      <li>Les fils nus sur l'adaptateur font de faux contacts : un branchement propre est essentiel.</li>
-      <li>Le mode mosaïque Videotex affiche les images en demi-teintes (tramage), jamais en pixels pleins.</li>
-      <li>Le hotspot WiFi ne démarrait pas : le service <code>dnsmasq</code> système
-      occupait le port 53, empêchant NetworkManager de lancer le DHCP du point d'accès.</li>
-    </ul>
-  </div>
-</section>
-
 <!-- ARCHITECTURE -->
-<section id="archi" class="alt">
+<section id="archi">
   <h2>Architecture logicielle</h2>
   <p class="lead">Trois services autonomes orchestrés par systemd sur le Raspberry Pi.</p>
   <div class="cards">
@@ -150,7 +91,7 @@
 </section>
 
 <!-- STACK -->
-<section id="stack">
+<section id="stack" class="alt">
   <h2>Stack technique</h2>
   <div class="chips">
     <span>Raspberry Pi OS Lite</span>
@@ -166,7 +107,7 @@
 </section>
 
 <!-- CTA FINAL -->
-<section id="code" class="alt center">
+<section id="code" class="center">
   <h2>Le projet est open source</h2>
   <p class="lead">Tout le code, les services et la notice d'installation complète sont sur GitHub.</p>
   <a class="btn btn-primary" href="https://github.com/jherard-fr/minitel-gpt">github.com/jherard-fr/minitel-gpt</a>

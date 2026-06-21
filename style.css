@@ -86,9 +86,15 @@ li{margin:5px 0}
 .hero-sub{padding:46px 20px 36px}
 .back{display:inline-block;color:var(--accent);margin-bottom:16px;font-weight:600}
 .page-title{font-size:2.3em;margin:0 0 6px;color:#fff}
-figure{margin:0}
-figure img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);display:block}
-figcaption{color:var(--muted);font-size:.82em;margin-top:8px;text-align:center}
+figure{margin:0;text-align:center}
+figure img{
+  width:100%;max-width:340px;height:auto;margin:0 auto;display:block;
+  border-radius:12px;border:1px solid var(--border);
+  cursor:zoom-in;transition:transform .3s ease,box-shadow .3s ease;
+}
+figure img:hover{transform:scale(1.9);box-shadow:0 18px 55px rgba(0,0,0,.65);position:relative;z-index:30}
+figcaption{color:var(--muted);font-size:.82em;margin-top:10px;text-align:center}
+@media(hover:none){figure img{cursor:default}figure img:hover{transform:none;box-shadow:none}}
 .steps{list-style:none;padding:0;margin:0;counter-reset:step;display:grid;gap:34px}
 .steps>li{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;position:relative}
 .steps>li::before{counter-increment:step;content:counter(step);position:absolute;top:-15px;left:22px;

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interface d'administration — MINITEL GPT</title>
+<meta name="description" content="L'interface web d'administration de MINITEL GPT : tableau de bord, création de personnalités, paramètres et mises à jour — sans aucune ligne de commande.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero hero-sub">
+  <a class="back" href="index.html">← Retour au projet</a>
+  <h1 class="page-title">Interface d'administration</h1>
+  <p class="tagline">Tout piloter depuis un navigateur, sans une ligne de commande.</p>
+  <p class="sub">Personnalités, clé API, mises à jour : tout se règle en quelques clics.</p>
+</header>
+
+<main>
+
+<!-- ACCES -->
+<section id="acces">
+  <h2>Y accéder</h2>
+  <p class="lead">Le Raspberry héberge un petit site d'administration, accessible depuis
+  n'importe quel appareil du même réseau.</p>
+  <ul>
+    <li>Ouvrez <code>http://&lt;adresse-du-pi&gt;:8080</code> dans un navigateur.</li>
+    <li>L'<strong>adresse IP</strong> du Pi s'affiche directement <strong>sur le Minitel</strong> en appuyant sur la touche <strong>Guide</strong>.</li>
+    <li>Un <strong>mot de passe</strong> protège l'accès (modifiable). Aucun écran ni clavier branché sur le Pi n'est nécessaire.</li>
+  </ul>
+</section>
+
+<!-- TABLEAU DE BORD -->
+<section id="dashboard" class="alt">
+  <div class="two-col">
+    <div>
+      <h2>Tableau de bord</h2>
+      <p>D'un coup d'œil&nbsp;: l'<strong>état des services</strong> (terminal, WiFi,
+      administration), un bouton pour <strong>redémarrer le terminal</strong>, et la liste
+      des <strong>personnalités</strong> disponibles.</p>
+      <p>La personnalité <strong>active</strong> — celle avec laquelle dialogue le Minitel —
+      se change en un clic.</p>
+    </div>
+    <figure>
+      <img src="assets/notice/accueil.png" alt="Tableau de bord de l'administration MINITEL GPT" loading="lazy">
+      <figcaption>Le tableau de bord (survolez pour agrandir).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- PERSONNALITES -->
+<section id="personnalites">
+  <div class="two-col">
+    <figure>
+      <img src="assets/notice/personnalites.png" alt="Éditeur de personnalités de MINITEL GPT" loading="lazy">
+      <figcaption>L'éditeur de personnalités (survolez pour agrandir).</figcaption>
+    </figure>
+    <div>
+      <h2>Personnalités</h2>
+      <p>Le cœur du projet&nbsp;: <strong>créez, modifiez et supprimez</strong> les
+      personnalités de votre assistant. Pour chacune&nbsp;: un nom, les textes d'accueil
+      affichés sur le Minitel, et le <strong>prompt système</strong> qui définit son
+      caractère et son périmètre.</p>
+      <ul>
+        <li><strong>Génération assistée par IA</strong>&nbsp;: décrivez l'idée, Mistral rédige les consignes.</li>
+        <li><strong>Fichiers de connaissance</strong> (.txt) injectés dans le contexte pour nourrir la personnalité.</li>
+      </ul>
+      <p>De quoi créer la personnalité de votre choix&nbsp;: une mascotte d'anniversaire,
+      un guide pour un événement pro, un compagnon pour les enfants…</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARAMETRES -->
+<section id="parametres" class="alt">
+  <div class="two-col">
+    <div>
+      <h2>Paramètres &amp; mises à jour</h2>
+      <p>On y renseigne la <strong>clé API Mistral</strong> et on consulte les
+      <strong>journaux</strong> du terminal.</p>
+      <p>Surtout, l'application se <strong>met à jour en un clic</strong> depuis GitHub&nbsp;:
+      vérification des nouveautés, installation, et retour à la version précédente si besoin —
+      le tout sans jamais toucher à vos personnalités ni à vos réglages.</p>
+    </div>
+    <figure>
+      <img src="assets/notice/configuration.png" alt="Paramètres et mise à jour de MINITEL GPT" loading="lazy">
+      <figcaption>Les paramètres et la mise à jour (survolez pour agrandir).</figcaption>
+    </figure>
+  </div>
+
+  <div class="callout">
+    <h3>✅ Autonome de bout en bout</h3>
+    <p>Configuration, personnalités et mises à jour&nbsp;: tout se fait depuis le navigateur.
+      Le code complet et la procédure d'installation sont sur GitHub.</p>
+    <p style="margin-top:12px">
+      <a class="btn btn-primary" href="https://github.com/jherard-fr/minitel-gpt#readme">Installation / Documentation</a>
+      <a class="btn btn-ghost" href="index.html">← Retour au projet</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <img src="assets/favicon-32.png" alt="" width="24">
+  <p>MINITEL GPT — un projet de Jérôme Hérard. Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+</footer>
+
+<script>
+new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)
+  + '&p=' + encodeURIComponent(location.pathname) + '&_=' + Date.now();
+</script>
+</body>
+</html>
