@@ -107,6 +107,9 @@ figcaption{color:var(--muted);font-size:.82em;margin-top:10px;text-align:center}
 /* HASHTAGS (hero) */
 .sub.tags{color:var(--accent);opacity:.85;font-size:.95em;line-height:1.9;max-width:640px}
 
+/* VIDEO (concept) */
+.concept-video{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--border);background:#000}
+
 /* CONTACT */
 .contact{max-width:560px;margin:0 auto;text-align:left}
 .contact .field{margin-bottom:16px}
