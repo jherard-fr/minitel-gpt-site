@@ -22,6 +22,22 @@ if (is_file($file)) {
     }
 }
 
+// ── Exclusion de mon IP (case cochée par défaut) ─────────────────────────
+// Même détection que track.php (derrière proxy/Cloudflare) pour matcher les hits.
+$my_ip = '';
+foreach (['HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'] as $k) {
+    if (!empty($_SERVER[$k])) {
+        $cand = trim(explode(',', $_SERVER[$k])[0]);
+        if (filter_var($cand, FILTER_VALIDATE_IP)) { $my_ip = $cand; break; }
+    }
+}
+$exclude_me = ($_GET['myip'] ?? '1') !== '0';   // par défaut : exclue
+$my_count = 0;
+foreach ($hits as $h) if ($my_ip && ($h['ip'] ?? '') === $my_ip) $my_count++;
+if ($exclude_me && $my_ip) {
+    $hits = array_values(array_filter($hits, fn($h) => ($h['ip'] ?? '') !== $my_ip));
+}
+
 // ── Parsing navigateur / OS ──────────────────────────────────────────────
 function parse_browser($ua) {
     $ua = $ua ?: '';
@@ -133,9 +149,16 @@ td.n{text-align:right;color:var(--accent);width:60px}
 .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:.82em;color:var(--muted)}
 .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 select{background:#1b1b1f;color:#e6e6e6;border:1px solid var(--border);border-radius:6px;padding:4px 9px;font:inherit;margin-left:auto;cursor:pointer}
+.excl{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:.85em;margin:-6px 0 16px;cursor:pointer}
+.excl input{accent-color:var(--accent);cursor:pointer}
 #tip{position:absolute;display:none;background:#0d0d1a;border:1px solid var(--border);border-radius:6px;padding:6px 9px;font-size:.8em;pointer-events:none;white-space:nowrap;transform:translate(-50%,-115%);z-index:5}
 </style></head><body>
 <h1>📊 Statistiques - MINITEL GPT</h1>
+<label class=excl>
+  <input type=checkbox <?= $exclude_me ? 'checked' : '' ?>
+    onchange="location.href='stats.php?token=<?= urlencode($token) ?>&myip='+(this.checked?'1':'0')">
+  Exclure mon IP<?= $my_ip ? ' (' . htmlspecialchars($my_ip) . ($my_count ? ' · ' . $my_count . ' vue' . ($my_count > 1 ? 's' : '') . ' masquée' . ($my_count > 1 ? 's' : '') : '') . ')' : '' ?>
+</label>
 <div class=kpis>
   <div class=kpi><b><?= $total ?></b><span>pages vues</span></div>
   <div class=kpi><b><?= count($uniq_ip) ?></b><span>visiteurs uniques (IP)</span></div>
