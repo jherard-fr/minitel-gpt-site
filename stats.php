@@ -3,6 +3,23 @@
 // URL : https://minitel-gpt.herard.com/stats.php?token=VOTRE_TOKEN
 $TOKEN_HASH = '83e78a52158daafa02ae6413b410f4d754e8ae3f4c9ddc7466e356824494c92a';
 
+// ── Diagnostic temporaire (sans exposer les IP brutes) ───────────────────
+if (($_GET['selfcheck'] ?? '') === '1') {
+    header('Content-Type: text/plain; charset=utf-8');
+    $d = __DIR__ . '/data'; $H = [];
+    if (is_file("$d/hits.jsonl")) foreach (file("$d/hits.jsonl", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $l) { $r = json_decode($l, true); if ($r) $H[] = $r; }
+    $wip = 0; $ips = []; $byd = []; $dip = []; $lens = [];
+    foreach ($H as $h) { $ip = $h['ip'] ?? ''; if ($ip) { $wip++; $ips[$ip] = 1; } $j = substr($h['t'] ?? '', 0, 10); if ($j) { $byd[$j] = ($byd[$j] ?? 0) + 1; if ($ip) $dip[$j][$ip] = 1; } }
+    foreach (array_slice(array_keys($ips), 0, 8) as $ip) $lens[] = strlen($ip);
+    echo "ABOUT stats.php selfcheck\n";
+    echo "hits=" . count($H) . "  hits_with_ip=$wip  unique_ips=" . count($ips) . "\n";
+    echo "has_target_ip(88.160.78.52)=" . (isset($ips['88.160.78.52']) ? 'OUI (' . $ips['88.160.78.52'] . ')' : 'non') . "\n";
+    echo "ip_string_lengths(sample)=" . implode(',', $lens) . "  (IPv4<=15, IPv6 plus long)\n";
+    echo "derniers 7 jours (v=pages vues, u=visites uniques) :\n";
+    for ($i = 6; $i >= 0; $i--) { $j = date('Y-m-d', strtotime("-$i days")); echo "  $j  v=" . ($byd[$j] ?? 0) . "  u=" . (isset($dip[$j]) ? count($dip[$j]) : 0) . "\n"; }
+    exit;
+}
+
 $token = $_GET['token'] ?? '';
 if (hash('sha256', $token) !== $TOKEN_HASH) {
     http_response_code(403);
