@@ -32,6 +32,36 @@ if (mb_strlen($name) > 80 || mb_strlen($email) > 120 || mb_strlen($message) > 30
     exit;
 }
 
+// ── Garde-fou anti-flood ────────────────────────────────────────────────
+$rlDir = __DIR__ . '/data';
+if (!is_dir($rlDir)) @mkdir($rlDir, 0775, true);
+$now = time();
+$ip  = $_SERVER['REMOTE_ADDR'] ?? 'x';
+
+// 1 envoi / 60 s par adresse IP
+$ipFile = $rlDir . '/rl_' . md5($ip) . '.txt';
+$last   = is_file($ipFile) ? (int) @file_get_contents($ipFile) : 0;
+if ($now - $last < 60) {
+    http_response_code(429);
+    echo json_encode(['ok' => false, 'error' => 'rate']);
+    exit;
+}
+
+// Plafond global : 20 envois / heure
+$gFile = $rlDir . '/rl_global.txt';
+$hits  = is_file($gFile) ? array_map('intval', file($gFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : [];
+$hits  = array_values(array_filter($hits, function ($t) use ($now) { return $now - $t < 3600; }));
+if (count($hits) >= 20) {
+    http_response_code(429);
+    echo json_encode(['ok' => false, 'error' => 'rate']);
+    exit;
+}
+
+// On réserve le créneau dès maintenant (empêche les rafales même si l'envoi traîne).
+@file_put_contents($ipFile, (string) $now, LOCK_EX);
+$hits[] = $now;
+@file_put_contents($gFile, implode("\n", $hits) . "\n", LOCK_EX);
+
 // Clé API Resend : fichier injecté au déploiement, sinon variable d'environnement.
 $keyFile = __DIR__ . '/resend-key.php';
 $apiKey  = is_file($keyFile) ? (include $keyFile) : (getenv('RESEND_API_KEY') ?: '');
