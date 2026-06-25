@@ -4,26 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MINITEL GPT - Un Minitel des années 80 propulsé par l'IA</title>
-<meta name="description" content="Transformez un Minitel des années 80 en terminal de chat IA, propulsé par un Raspberry Pi (Zero W, Zero 2 W ou Pi 3) et l'IA Mistral. Tutoriel de câblage pas à pas, interface d'administration web et code open source.">
-<meta name="keywords" content="Minitel, Raspberry Pi, intelligence artificielle, Mistral, Vidéotex, rétro, DIY, chatbot, télématique, Pi Zero W, Pi Zero 2 W">
+<meta name="description" content="Transformez un Minitel des années 80 en terminal de chat IA, propulsé par un Raspberry Pi (Zero W, Zero 2 W ou Pi 3) et l'IA de votre choix : Mistral ou Claude. Tutoriel de câblage pas à pas, interface d'administration web et code open source.">
+<meta name="keywords" content="Minitel, Raspberry Pi, intelligence artificielle, Mistral, Claude, Anthropic, Vidéotex, rétro, DIY, chatbot, télématique, Pi Zero W, Pi Zero 2 W">
 <meta name="author" content="Jérôme Hérard">
 <link rel="canonical" href="https://minitel-gpt.herard.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MINITEL GPT">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="MINITEL GPT - un Minitel des années 80 propulsé par l'IA">
-<meta property="og:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral. Câblage, admin web, open source.">
+<meta property="og:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral ou Claude. Câblage, admin web, open source.">
 <meta property="og:url" content="https://minitel-gpt.herard.com/">
 <meta property="og:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MINITEL GPT - un Minitel des années 80 propulsé par l'IA">
-<meta name="twitter:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral.">
+<meta name="twitter:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral ou Claude.">
 <meta name="twitter:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"MINITEL GPT","url":"https://minitel-gpt.herard.com/","inLanguage":"fr-FR","description":"Un Minitel des années 80 transformé en terminal de chat IA avec un Raspberry Pi et l'IA Mistral.","author":{"@type":"Person","name":"Jérôme Hérard"}}
+{"@context":"https://schema.org","@type":"WebSite","name":"MINITEL GPT","url":"https://minitel-gpt.herard.com/","inLanguage":"fr-FR","description":"Un Minitel des années 80 transformé en terminal de chat IA avec un Raspberry Pi et l'IA Mistral ou Claude.","author":{"@type":"Person","name":"Jérôme Hérard"}}
 </script>
 </head>
 <body>
@@ -42,7 +42,7 @@
 <header class="hero">
   <img class="logo" src="assets/logo-minitel-gpt-2.png?v=5" alt="MINITEL GPT">
   <p class="tagline">Un Minitel des années 80<br>ressuscité en terminal de chat IA</p>
-  <p class="sub tags">#Minitel #RaspberryPi #IntelligenceArtificielle #MistralAI<br>#Vidéotex #Rétro #DIY #ChatIA #Vintage #Télématique</p>
+  <p class="sub tags">#Minitel #RaspberryPi #IntelligenceArtificielle #MistralAI #ClaudeAI<br>#Vidéotex #Rétro #DIY #ChatIA #Vintage #Télématique</p>
 </header>
 
 <main>
@@ -98,9 +98,10 @@
     </div>
     <div class="card">
       <h3>⚙ admin-ui</h3>
-      <p>Interface web à onglets : choix et création de « personnalités », génération de
-      consignes par IA, <strong>fichiers de connaissance</strong> (.txt) pour nourrir
-      chaque personnalité, textes d'accueil personnalisables et clé API.</p>
+      <p>Interface web à onglets : <strong>choix du fournisseur d'IA (Mistral ou Claude)</strong>,
+      création de « personnalités », génération de consignes par IA, zone de test sans le Minitel,
+      <strong>fichiers de connaissance</strong> (.txt) pour nourrir chaque personnalité, textes
+      d'accueil personnalisables et clés API.</p>
     </div>
   </div>
 </section>
@@ -118,7 +119,7 @@
     <span>NetworkManager / nmcli</span>
     <span>dnsmasq</span>
     <span>systemd</span>
-    <span>API Mistral</span>
+    <span>API Mistral ou Claude</span>
     <span>Videotex / ASCII</span>
   </div>
 </section>
