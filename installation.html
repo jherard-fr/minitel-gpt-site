@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation pas à pas - mettre en route MINITEL GPT | MINITEL GPT</title>
+<meta name="description" content="Installer MINITEL GPT sur un Raspberry Pi pas à pas : préparation de la carte SD, connexion SSH depuis Windows, téléchargement et installation, puis saisie de la clé API (Mistral ou Claude) depuis l'admin.">
+<meta name="author" content="Jérôme Hérard">
+<link rel="canonical" href="https://minitel-gpt.herard.com/installation.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MINITEL GPT">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Installation pas à pas - mettre en route MINITEL GPT">
+<meta property="og:description" content="De la carte SD au premier écran : flashage, connexion SSH, installation, clé API. Sans écran ni clavier sur le Pi.">
+<meta property="og:url" content="https://minitel-gpt.herard.com/installation.html">
+<meta property="og:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Installation pas à pas - mettre en route MINITEL GPT">
+<meta name="twitter:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":"Installer MINITEL GPT sur un Raspberry Pi","description":"Mettre en route MINITEL GPT pas à pas : carte SD, connexion SSH, installation, clé API.","inLanguage":"fr-FR","totalTime":"PT20M","step":[{"@type":"HowToStep","position":1,"name":"Préparer la carte SD","text":"Flasher Raspberry Pi OS Lite avec Raspberry Pi Imager, activer SSH, définir l'utilisateur minitel et le WiFi."},{"@type":"HowToStep","position":2,"name":"Se connecter au Pi en SSH","text":"Depuis PowerShell, trouver l'IP du Pi avec arp -a puis se connecter en ssh minitel@IP."},{"@type":"HowToStep","position":3,"name":"Mettre à jour et installer git","text":"sudo apt update puis sudo apt install git."},{"@type":"HowToStep","position":4,"name":"Télécharger et installer","text":"git clone du projet puis sudo bash install.sh, et démarrer les services."},{"@type":"HowToStep","position":5,"name":"Renseigner la clé API","text":"Choisir le fournisseur (Mistral ou Claude) et coller la clé dans l'interface d'administration."}]}
+</script>
+</head>
+<body>
+
+<nav class="mainnav">
+  <a class="nav-home" href="index.html"><img src="assets/favicon-32.png" width="26" height="26" alt=""> MINITEL&nbsp;GPT</a>
+  <div class="nav-links">
+    <a href="notice-cablage.html">Câblage pas à pas</a>
+    <a href="installation.html" class="active">Installation</a>
+    <a href="interface-admin.html">Interface d'administration</a>
+    <a href="github.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.438 9.63 8.205 11.19.6.11.82-.26.82-.58 0-.29-.01-1.04-.015-2.04-3.338.72-4.042-1.61-4.042-1.61-.546-1.38-1.333-1.75-1.333-1.75-1.09-.74.083-.73.083-.73 1.205.085 1.84 1.24 1.84 1.24 1.07 1.83 2.807 1.3 3.492.99.108-.78.42-1.3.762-1.6-2.665-.3-5.466-1.33-5.466-5.93 0-1.31.469-2.38 1.236-3.22-.124-.3-.535-1.52.117-3.18 0 0 1.008-.32 3.3 1.23a11.5 11.5 0 0 1 3.003-.4c1.02.005 2.047.138 3.006.4 2.29-1.55 3.297-1.23 3.297-1.23.653 1.66.242 2.88.118 3.18.77.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.625-5.479 5.92.43.37.823 1.1.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .32.216.7.825.58C20.565 21.91 24 17.49 24 12.29 24 5.78 18.627.5 12 .5z"/></svg> Code GitHub</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<header class="hero hero-sub">
+  <h1 class="page-title">Installation</h1>
+  <p class="tagline">De la carte SD au premier écran,<br>pas à pas.</p>
+  <p class="sub">Une vingtaine de minutes, entièrement à distance - ni écran ni clavier sur le Pi.</p>
+</header>
+
+<main>
+
+<!-- AVANT DE COMMENCER -->
+<section id="avant">
+  <h2>Avant de commencer</h2>
+  <p class="lead">Il vous faut&nbsp;:</p>
+  <ul>
+    <li>le <strong>montage câblé</strong> (voir la <a href="notice-cablage.html">notice de câblage</a>) - pas indispensable pour installer, mais utile pour voir l'écran s'allumer à la fin&nbsp;;</li>
+    <li>une <strong>carte micro SD</strong> et un PC sous <strong>Windows</strong> (la procédure ci-dessous utilise PowerShell, intégré à Windows)&nbsp;;</li>
+    <li>une <strong>clé API</strong> Mistral ou Claude (gratuite à créer ; on la renseigne tout à la fin).</li>
+  </ul>
+</section>
+
+<!-- ETAPES -->
+<section id="etapes" class="alt">
+  <h2>L'installation, étape par étape</h2>
+
+  <ol class="steps">
+    <li>
+      <p><strong>Préparez la carte SD.</strong> Avec
+      <a href="https://www.raspberrypi.com/software/" target="_blank" rel="noopener">Raspberry&nbsp;Pi&nbsp;Imager</a>,
+      flashez <strong>Raspberry Pi OS Lite</strong> :</p>
+      <ul>
+        <li><strong>Pi Zero 2 W</strong> / <strong>Pi 3</strong> : version <strong>64-bit</strong> ;</li>
+        <li><strong>Pi Zero W (v1)</strong> : version <strong>32-bit</strong> - c'est la seule proposée pour ce modèle (processeur ARMv6), c'est normal.</li>
+      </ul>
+      <p>Dans les réglages (⚙) de l'imageur : activez <strong>SSH</strong>, créez l'utilisateur
+      <code>minitel</code> avec un mot de passe, et renseignez votre <strong>WiFi</strong>. Le Pi
+      fonctionnera ensuite tout seul, sans écran ni clavier.</p>
+    </li>
+
+    <li>
+      <p><strong>Connectez-vous au Pi en SSH.</strong> Insérez la carte, branchez le Pi, attendez
+      une minute qu'il rejoigne le WiFi. Sur votre PC, ouvrez <strong>PowerShell</strong> et trouvez
+      l'adresse IP du Pi (le filtre cible les adresses des Raspberry) :</p>
+      <pre class="cmd">arp -a | Select-String "b8-27-eb|dc-a6-32|e4-5f-01|d8-3a-dd|2c-cf-67|28-cd-c1"</pre>
+      <p>Connectez-vous en remplaçant l'IP par celle obtenue&nbsp;:</p>
+      <pre class="cmd">ssh minitel@192.168.1.42</pre>
+      <p>Saisissez le mot de passe défini à l'étape 1. <strong>C'est normal qu'aucun caractère ne
+      s'affiche</strong> pendant la frappe : c'est une sécurité.</p>
+      <p class="note">Astuce : dans PowerShell, un <strong>clic droit</strong> colle le presse-papiers.</p>
+    </li>
+
+    <li>
+      <p><strong>Mettez le système à jour et installez git</strong> (qui servira ensuite aux mises
+      à jour en un clic)&nbsp;:</p>
+      <pre class="cmd">sudo apt update
+sudo apt install git</pre>
+    </li>
+
+    <li>
+      <p><strong>Téléchargez puis installez MINITEL GPT</strong>&nbsp;:</p>
+      <pre class="cmd">cd /home/minitel
+git clone https://github.com/jherard-fr/minitel-gpt.git
+cd minitel-gpt
+sudo bash install.sh</pre>
+      <p>Puis démarrez les services&nbsp;:</p>
+      <pre class="cmd">sudo systemctl restart minitel-chatgpt admin-ui wifi-manager</pre>
+      <p><strong>Voilà, c'est installé&nbsp;!</strong> L'écran d'accueil s'affiche sur le Minitel
+      (sur un <strong>Minitel&nbsp;2</strong>, faites <code>Fnct&nbsp;+&nbsp;Sommaire</code> à
+      chaque allumage).</p>
+    </li>
+
+    <li>
+      <p><strong>Renseignez la clé API.</strong> Rien à éditer à la main : ouvrez l'<a href="interface-admin.html">interface d'administration</a>
+      (<code>http://&lt;ip-du-pi&gt;:8080</code>, mot de passe <code>mistral</code> ; l'IP s'affiche
+      aussi sur le Minitel via la touche <strong>Guide</strong>). Dans l'onglet
+      <strong>Paramètres</strong>, choisissez le <strong>fournisseur d'IA</strong> et collez la clé&nbsp;:</p>
+      <ul>
+        <li>Clé <strong>Mistral</strong> : <a href="https://admin.mistral.ai/organization/api-keys" target="_blank" rel="noopener">admin.mistral.ai</a></li>
+        <li>Clé <strong>Claude</strong> : <a href="https://platform.claude.com/" target="_blank" rel="noopener">platform.claude.com</a></li>
+      </ul>
+      <p>Pour chaque fournisseur, un menu propose les modèles disponibles avec leur coût et leur
+      pertinence.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- FINI -->
+<section id="fini">
+  <h2>Et voilà&nbsp;!</h2>
+  <div class="callout">
+    <h3>✅ Votre Minitel dialogue avec l'IA</h3>
+    <p>Tapez une question sur le clavier du Minitel, validez avec <strong>Envoi</strong> : la réponse
+      s'affiche à l'écran. Tout le reste - personnalités, textes d'accueil, fichiers de connaissance,
+      mises à jour - se règle depuis l'<a href="interface-admin.html">interface d'administration</a>,
+      sans jamais reprendre la ligne de commande.</p>
+  </div>
+  <p style="margin-top:24px">Le dossier installé est un <strong>clone git</strong> : les mises à jour
+    se font en un clic depuis l'admin (onglet Paramètres). Le détail complet et le code source sont
+    sur <a href="github.html">GitHub</a>.</p>
+</section>
+
+</main>
+
+<footer>
+  <img src="assets/favicon-32.png" alt="" width="24">
+  <p>MINITEL GPT - un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+</footer>
+
+<script>
+new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)
+  + '&p=' + encodeURIComponent(location.pathname) + '&_=' + Date.now();
+</script>
+</body>
+</html>

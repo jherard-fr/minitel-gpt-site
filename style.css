@@ -104,6 +104,12 @@ figcaption{color:var(--muted);font-size:.82em;margin-top:10px;text-align:center}
 .steps .step-fig{margin-top:16px}
 .buy a{word-break:break-word}
 
+/* Blocs de commande (page installation) */
+pre.cmd{background:#0d0d1a;border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;
+  font-family:'Courier New',monospace;font-size:.88em;color:#d7f5f0;line-height:1.55;white-space:pre}
+pre.cmd .c{color:var(--muted)}
+
 /* HASHTAGS (hero) */
 .sub.tags{color:var(--accent);opacity:.85;font-size:.95em;line-height:1.9;max-width:640px}
 
