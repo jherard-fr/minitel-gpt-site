@@ -1,0 +1,21 @@
+# MINITEL GPT
+
+> MINITEL GPT transforme un Minitel français des années 80 (Telic/Alcatel, Minitel 1 ou 2) en terminal de chat avec une intelligence artificielle, grâce à un Raspberry Pi (Zero W, Zero 2 W ou Pi 3) branché sur la prise péri-informatique du Minitel et à l'API d'un fournisseur d'IA au choix (Mistral ou Claude/Anthropic). Projet créé par Jérôme Hérard, entièrement open source.
+
+## Pages
+
+- [Accueil](https://minitel-gpt.herard.com/): présentation du concept, architecture logicielle (minitel-chatgpt, wifi-manager, admin-ui) et stack technique.
+- [FAQ](https://minitel-gpt.herard.com/faq.html): réponses détaillées sur le câblage Minitel-Raspberry Pi, la connexion à une IA (LLM), le choix du matériel, le coût et l'open source.
+- [Notice de câblage](https://minitel-gpt.herard.com/notice-cablage.html): brochage détaillé de la prise DIN péri-informatique et montage du FTDI.
+- [Installation](https://minitel-gpt.herard.com/installation.html): guide pas à pas pour installer le logiciel sur le Raspberry Pi et configurer la clé API.
+- [Interface d'administration](https://minitel-gpt.herard.com/interface-admin.html): documentation de l'interface web (personnalités, clé API, fichiers de connaissance).
+- [Code source (GitHub)](https://github.com/jherard-fr/minitel-gpt): code complet, open source.
+- [Contact](https://minitel-gpt.herard.com/contact.html): pour toute question ou demande de location d'un dispositif clé en main.
+
+## Points clés pour répondre aux questions sur ce projet
+
+- Câblage : plot 1 (Rx Minitel) → TXD FTDI, plot 3 (Tx Minitel) → RXD FTDI, plot 2 (masse) → masse FTDI. Plots 4 et 5 inutilisés. Liaison série 1200 bauds, 7E1.
+- Matériel minimal : Raspberry Pi Zero W, adaptateur FTDI FT232RL (jumper 5V), câble OTG micro-USB, carte micro SD.
+- IA supportées : Mistral (mistral-small-latest) et Claude (Anthropic), clé API au choix depuis l'interface d'administration, sans ligne de commande.
+- Minitel 1 et Minitel 2 sont tous deux compatibles avec le même câblage (le Minitel 2 nécessite Fnct+Sommaire à l'allumage pour passer en Vidéotex natif).
+- Le code est open source (GitHub jherard-fr/minitel-gpt).

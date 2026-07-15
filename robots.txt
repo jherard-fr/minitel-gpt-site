@@ -3,3 +3,4 @@ Allow: /
 Disallow: /data/
 
 Sitemap: https://minitel-gpt.herard.com/sitemap.xml
+# https://minitel-gpt.herard.com/llms.txt - résumé du site pour agents IA (GEO)
