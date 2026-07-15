@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ - Connecter un Minitel à un Raspberry Pi et à une IA | MINITEL GPT</title>
+<meta name="description" content="Questions fréquentes : comment connecter un Minitel à un Raspberry Pi, le relier à une IA (Mistral ou Claude), quel matériel choisir, câblage DIN, Minitel 1 vs Minitel 2, coût et open source.">
+<meta name="author" content="Jérôme Hérard">
+<link rel="canonical" href="https://minitel-gpt.herard.com/faq.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MINITEL GPT">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="FAQ - Connecter un Minitel à un Raspberry Pi et à une IA">
+<meta property="og:description" content="Toutes les réponses pour brancher un Minitel sur un Raspberry Pi et le faire dialoguer avec une IA (Mistral, Claude).">
+<meta property="og:url" content="https://minitel-gpt.herard.com/faq.html">
+<meta property="og:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FAQ - Connecter un Minitel à un Raspberry Pi et à une IA">
+<meta name="twitter:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Comment connecter un Minitel à un Raspberry Pi ?","acceptedAnswer":{"@type":"Answer","text":"On relie le Minitel au Raspberry Pi via sa prise péri-informatique (DIN 5 broches) et un adaptateur USB-série FTDI FT232RL (jumper sur 5V). Trois fils suffisent : le plot 1 (Rx du Minitel) va sur le TXD du FTDI, le plot 3 (Tx du Minitel) va sur le RXD du FTDI, et le plot 2 (masse) va sur la masse du FTDI. Les plots 4 et 5 ne doivent pas être utilisés. Le FTDI se branche ensuite en USB sur le Raspberry Pi (port /dev/ttyUSB0), avec une liaison série à 1200 bauds, 7 bits, parité paire, 1 bit d'arrêt (7E1)."}},
+{"@type":"Question","name":"Quel Raspberry Pi choisir pour un projet Minitel ?","acceptedAnswer":{"@type":"Answer","text":"Un Raspberry Pi Zero W suffit largement (le moins cher, il tient dans un petit boîtier). Le Pi Zero 2 W et le Pi 3 fonctionnent aussi et sont recommandés en cas de pénurie du Zero W. Sur le Zero W (v1, processeur ARMv6), il faut flasher la version 32-bit de Raspberry Pi OS Lite ; sur Zero 2 W et Pi 3, la version 64-bit."}},
+{"@type":"Question","name":"Comment connecter le Raspberry Pi à une intelligence artificielle (LLM) ?","acceptedAnswer":{"@type":"Answer","text":"Le Raspberry Pi appelle l'API d'un fournisseur d'IA en HTTPS via une clé API : Mistral (modèle mistral-small-latest) ou Claude (Anthropic), au choix. La clé se renseigne sans ligne de commande, depuis l'interface d'administration web du Pi (onglet Paramètres), qui tourne sur le port 8080. Chaque touche du Minitel envoie ensuite la question tapée au clavier vers ce LLM, et la réponse revient s'afficher à l'écran en mode Vidéotex, paginée avec la touche Suite."}},
+{"@type":"Question","name":"Faut-il savoir coder pour brancher un Minitel sur un LLM ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le projet MINITEL GPT fournit un script d'installation (install.sh) qui configure tout automatiquement sur le Raspberry Pi, puis une interface web d'administration permet de choisir le fournisseur d'IA, coller la clé API, créer des « personnalités » de conversation et ajouter des fichiers de connaissance, sans jamais toucher au code ni à la ligne de commande après l'installation."}},
+{"@type":"Question","name":"Le montage fonctionne-t-il avec un Minitel 1 et un Minitel 2 ?","acceptedAnswer":{"@type":"Answer","text":"Oui, les deux fonctionnent, avec le même câblage sur la prise péri-informatique. Sur un Minitel 1 (Telic/Alcatel), le mode péri-informatique est actif par défaut. Sur un Minitel 2, il faut faire la manipulation Fnct + Sommaire à chaque allumage pour sortir de l'écran Répertoire et passer en Vidéotex natif ; ensuite le comportement est identique aux deux modèles."}},
+{"@type":"Question","name":"Combien coûte un projet Minitel GPT et combien de temps prend le montage ?","acceptedAnswer":{"@type":"Answer","text":"Le matériel (Raspberry Pi Zero W, adaptateur FTDI, câble OTG, carte micro SD) coûte quelques dizaines d'euros, et l'usage de l'IA (Mistral ou Claude) revient à quelques centimes par soirée d'utilisation. Le montage physique et l'installation logicielle prennent environ une heure quand on dispose déjà du matériel."}},
+{"@type":"Question","name":"Le code de MINITEL GPT est-il open source ?","acceptedAnswer":{"@type":"Answer","text":"Oui, l'intégralité du code (terminal Minitel, gestion WiFi autonome, interface d'administration web) est publiée en open source sur GitHub, librement consultable, installable et modifiable."}},
+{"@type":"Question","name":"Le Raspberry Pi a-t-il besoin d'un écran ou d'un clavier ?","acceptedAnswer":{"@type":"Answer","text":"Non. Une fois le WiFi configuré au flashage de la carte SD (ou via le hotspot de secours créé automatiquement par le Pi si le réseau est absent), toute la configuration se fait à distance : par SSH pour l'installation, puis par l'interface web d'administration pour le réglage de l'IA et des personnalités. Le Minitel devient le seul écran et clavier nécessaires au quotidien."}}
+]}
+</script>
+</head>
+<body>
+
+<nav class="mainnav">
+  <a class="nav-home" href="index.html"><img src="assets/favicon-32.png" width="26" height="26" alt=""> MINITEL&nbsp;GPT</a>
+  <div class="nav-links">
+    <a href="notice-cablage.html">Câblage pas à pas</a>
+    <a href="installation.html">Installation</a>
+    <a href="interface-admin.html">Interface d'administration</a>
+    <a href="faq.html" class="active">FAQ</a>
+    <a href="github.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.438 9.63 8.205 11.19.6.11.82-.26.82-.58 0-.29-.01-1.04-.015-2.04-3.338.72-4.042-1.61-4.042-1.61-.546-1.38-1.333-1.75-1.333-1.75-1.09-.74.083-.73.083-.73 1.205.085 1.84 1.24 1.84 1.24 1.07 1.83 2.807 1.3 3.492.99.108-.78.42-1.3.762-1.6-2.665-.3-5.466-1.33-5.466-5.93 0-1.31.469-2.38 1.236-3.22-.124-.3-.535-1.52.117-3.18 0 0 1.008-.32 3.3 1.23a11.5 11.5 0 0 1 3.003-.4c1.02.005 2.047.138 3.006.4 2.29-1.55 3.297-1.23 3.297-1.23.653 1.66.242 2.88.118 3.18.77.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.625-5.479 5.92.43.37.823 1.1.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .32.216.7.825.58C20.565 21.91 24 17.49 24 12.29 24 5.78 18.627.5 12 .5z"/></svg> Code GitHub</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<header class="hero hero-sub">
+  <h1 class="page-title">FAQ</h1>
+  <p class="tagline">Minitel, Raspberry Pi et intelligence artificielle&nbsp;:<br>les réponses aux questions les plus posées.</p>
+</header>
+
+<main>
+
+<section id="faq-cablage">
+  <h2>Câblage Minitel ↔ Raspberry Pi</h2>
+
+  <details open>
+    <summary>Comment connecter un Minitel à un Raspberry Pi ?</summary>
+    <p>On relie le Minitel au Raspberry Pi via sa <strong>prise péri-informatique</strong> (DIN 5 broches) et un adaptateur <strong>USB-série FTDI FT232RL</strong> (jumper sur 5V). Trois fils suffisent&nbsp;:</p>
+    <ul>
+      <li><strong>plot 1</strong> (Rx du Minitel) → <strong>TXD</strong> du FTDI ;</li>
+      <li><strong>plot 3</strong> (Tx du Minitel) → <strong>RXD</strong> du FTDI ;</li>
+      <li><strong>plot 2</strong> (masse) → masse du FTDI.</li>
+    </ul>
+    <p>Les plots 4 et 5 ne doivent <strong>pas</strong> être utilisés. Le FTDI se branche ensuite en USB sur le Pi (port <code>/dev/ttyUSB0</code>), liaison série à <strong>1200 bauds, 7E1</strong>. Détail complet et schéma sur la <a href="notice-cablage.html">notice de câblage</a>.</p>
+  </details>
+
+  <details>
+    <summary>Le montage fonctionne-t-il avec un Minitel 1 et un Minitel 2 ?</summary>
+    <p>Oui, les deux fonctionnent, avec le <strong>même câblage</strong>. Sur un <strong>Minitel 1</strong> (Telic/Alcatel), le mode péri-informatique est actif par défaut. Sur un <strong>Minitel 2</strong>, il faut faire <code>Fnct + Sommaire</code> à chaque allumage pour sortir de l'écran Répertoire et passer en Vidéotex natif&nbsp;; ensuite le comportement est identique aux deux modèles.</p>
+  </details>
+
+  <details>
+    <summary>Quel Raspberry Pi choisir ?</summary>
+    <p>Un <strong>Raspberry Pi Zero W</strong> suffit largement (le moins cher, il tient dans un petit boîtier). Le <strong>Pi Zero 2 W</strong> et le <strong>Pi 3</strong> fonctionnent aussi. Sur le Zero W (v1, ARMv6), flasher la version <strong>32-bit</strong> de Raspberry Pi OS Lite&nbsp;; sur Zero 2 W et Pi 3, la version <strong>64-bit</strong>.</p>
+  </details>
+
+  <details>
+    <summary>Le Raspberry Pi a-t-il besoin d'un écran ou d'un clavier ?</summary>
+    <p>Non. Le WiFi se configure au flashage de la carte SD (ou via le hotspot de secours créé automatiquement par le Pi si le réseau est absent). Toute la configuration se fait ensuite à distance&nbsp;: SSH pour l'installation, puis interface web d'administration pour l'IA et les personnalités. Le Minitel devient le seul écran et clavier utiles au quotidien.</p>
+  </details>
+</section>
+
+<section id="faq-ia" class="alt">
+  <h2>Connexion à une IA (Mistral, Claude)</h2>
+
+  <details open>
+    <summary>Comment connecter le Raspberry Pi à une intelligence artificielle (LLM) ?</summary>
+    <p>Le Raspberry Pi appelle l'API d'un fournisseur d'IA en HTTPS via une <strong>clé API</strong>&nbsp;: <strong>Mistral</strong> (modèle <code>mistral-small-latest</code>) ou <strong>Claude</strong> (Anthropic), au choix. La clé se renseigne sans ligne de commande, depuis l'<a href="interface-admin.html">interface d'administration web</a> du Pi (port 8080, onglet Paramètres). Chaque question tapée au clavier du Minitel part vers ce LLM, et la réponse revient s'afficher à l'écran en Vidéotex, paginée avec la touche <strong>Suite</strong>.</p>
+  </details>
+
+  <details>
+    <summary>Faut-il savoir coder pour brancher un Minitel sur un LLM ?</summary>
+    <p>Non. Le script <code>install.sh</code> configure tout automatiquement sur le Raspberry Pi. Ensuite, l'interface web d'administration permet de choisir le fournisseur d'IA, coller la clé API, créer des <strong>« personnalités »</strong> de conversation et ajouter des fichiers de connaissance, sans jamais toucher au code après l'installation.</p>
+  </details>
+
+  <details>
+    <summary>Combien coûte l'utilisation de l'IA sur ce montage ?</summary>
+    <p>Quelques centimes par soirée d'utilisation avec Mistral ou Claude - les modèles utilisés sont légers et le volume de texte échangé (questions/réponses affichées sur un écran Minitel 40 colonnes) reste faible.</p>
+  </details>
+</section>
+
+<section id="faq-projet">
+  <h2>Le projet</h2>
+
+  <details>
+    <summary>Combien coûte un projet Minitel GPT et combien de temps prend le montage ?</summary>
+    <p>Le matériel (Raspberry Pi Zero W, adaptateur FTDI, câble OTG, carte micro SD) coûte quelques dizaines d'euros. Le montage physique et l'installation logicielle prennent environ <strong>une heure</strong> quand on dispose déjà du matériel - voir le <a href="installation.html">guide d'installation pas à pas</a>.</p>
+  </details>
+
+  <details>
+    <summary>Le code de MINITEL GPT est-il open source ?</summary>
+    <p>Oui, l'intégralité du code (terminal Minitel, gestion WiFi autonome, interface d'administration web) est publiée en <strong>open source sur GitHub</strong>, librement consultable, installable et modifiable. Voir la <a href="github.html">page GitHub</a>.</p>
+  </details>
+
+  <details>
+    <summary>Une autre question ?</summary>
+    <p><a href="contact.html">Contactez-nous</a> - nous répondons directement, et nous proposons aussi des dispositifs clé en main en location pour événements perso ou pro.</p>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <img src="assets/favicon-32.png" alt="" width="24">
+  <p>MINITEL GPT - un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+</footer>
+
+<script>
+new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)
+  + '&p=' + encodeURIComponent(location.pathname) + '&_=' + Date.now();
+</script>
+</body>
+</html>

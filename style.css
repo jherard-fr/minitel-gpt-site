@@ -156,6 +156,18 @@ h1 .gh-mark,h2 .gh-mark{width:30px;height:30px;vertical-align:-5px;margin-right:
 .cf-status.ok{color:var(--accent)}
 .cf-status.err{color:#ff6b6b}
 
+/* FAQ */
+details{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:14px 18px;margin:0 0 14px}
+details+section h2,section+section details:first-of-type{margin-top:0}
+details summary{cursor:pointer;font-weight:700;color:#fff;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--accent);font-size:1.3em;font-weight:400;flex:none}
+details[open] summary::after{content:"−"}
+details p,details ul{margin:12px 0 0;color:var(--text)}
+details ul{padding-left:20px}
+
 /* FOOTER */
 footer{border-top:1px solid var(--border);text-align:center;padding:30px 20px;color:var(--muted);font-size:.9em}
 footer img{vertical-align:middle;margin-bottom:8px;opacity:.85}
