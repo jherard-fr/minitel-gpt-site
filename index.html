@@ -23,6 +23,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
 <link rel="stylesheet" href="style.css">
 <script src="assets/nav.js" defer></script>
+<script src="assets/cookies.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"MINITEL GPT","url":"https://minitel-gpt.herard.com/","inLanguage":"fr-FR","description":"Un Minitel des années 80 transformé en terminal de chat IA avec un Raspberry Pi et l'IA Mistral ou Claude.","author":{"@type":"Person","name":"Jérôme Hérard","sameAs":["https://github.com/jherard-fr","https://www.linkedin.com/in/jerome-herard"]}}
 </script>
@@ -141,7 +142,26 @@
 <footer>
   <img src="assets/favicon-32.png" alt="" width="24">
   <p>MINITEL GPT - un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+  <nav class="footer-legal" aria-label="Informations légales">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Politique de confidentialité</a>
+    <a href="cookies.html">Cookies</a>
+  </nav>
+
 </footer>
+
+<div id="cookie-modal" role="region" aria-label="Consentement aux cookies">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <p class="cookie-title">Gestion des cookies</p>
+      <p>Ce site n'utilise aucun cookie publicitaire ou de suivi. <a href="cookies.html">En savoir plus</a>.</p>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn btn-primary" onclick="cookieChoice('accept')">Accepter</button>
+      <button type="button" class="btn btn-ghost" onclick="cookieChoice('refuse')">Refuser</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // Statistiques de visite (collecteur track.php)

@@ -192,3 +192,26 @@ details ul{padding-left:20px}
 footer{border-top:1px solid var(--border);text-align:center;padding:30px 20px;color:var(--muted);font-size:.9em}
 footer img{vertical-align:middle;margin-bottom:8px;opacity:.85}
 footer p{margin:6px auto;max-width:520px}
+.footer-legal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin:16px 0 4px;font-size:.88em}
+.footer-legal a{color:var(--muted)}
+.footer-legal a:hover,.footer-legal a[aria-current="page"]{color:var(--accent)}
+
+/* PAGES LEGALES */
+.legal-content{max-width:720px}
+.legal-content h2{margin-top:34px}
+.legal-content .updated{color:var(--muted);font-style:italic;margin-top:-6px}
+.legal-content address{font-style:normal}
+.legal-content .reset-consent{background:none;color:var(--accent);border:none;cursor:pointer;
+  text-decoration:underline;font:inherit;padding:0}
+
+/* BANDEAU COOKIES */
+#cookie-modal{position:fixed;left:0;right:0;bottom:0;z-index:200;background:var(--bg2);
+  border-top:3px solid var(--accent);box-shadow:0 -4px 20px rgba(0,0,0,.5);padding:18px 20px;
+  transform:translateY(120%);transition:transform .3s ease}
+#cookie-modal.show{transform:translateY(0)}
+#cookie-modal .cookie-inner{max-width:980px;margin-inline:auto;display:flex;gap:18px;
+  align-items:center;flex-wrap:wrap}
+#cookie-modal .cookie-text{flex:1 1 24rem;color:var(--text);font-size:.92em}
+#cookie-modal .cookie-title{font-weight:700;color:#fff;margin-bottom:4px}
+#cookie-modal .cookie-actions{display:flex;gap:10px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){#cookie-modal{transition:none}}
