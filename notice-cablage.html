@@ -21,6 +21,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
 <link rel="stylesheet" href="style.css">
 <script src="assets/nav.js" defer></script>
+<script src="assets/cookies.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HowTo","name":"Câbler un Minitel à un Raspberry Pi","description":"Relier un Minitel à un Raspberry Pi via un adaptateur FTDI, pas à pas.","image":"https://minitel-gpt.herard.com/assets/notice/resultat.JPG","totalTime":"PT1H","inLanguage":"fr-FR","tool":[{"@type":"HowToTool","name":"Voltmètre"},{"@type":"HowToTool","name":"Pince à dénuder"},{"@type":"HowToTool","name":"Adaptateur FTDI FT232RL"}],"supply":[{"@type":"HowToSupply","name":"Raspberry Pi Zero W (ou Zero 2 W, ou Pi 3)"},{"@type":"HowToSupply","name":"Câble audio à fiche DIN 5 broches"},{"@type":"HowToSupply","name":"Câbles Dupont"}],"step":[{"@type":"HowToStep","position":1,"name":"Couper le câble audio","text":"Coupez le câble audio en deux, à la moitié de sa longueur."},{"@type":"HowToStep","position":2,"name":"Dénuder les fils","text":"Dénudez les petits fils au calibre 0,4 ou 0,5 mm."},{"@type":"HowToStep","position":3,"name":"Repérer les broches au voltmètre","text":"Identifiez au voltmètre les broches utiles : 1 = RX, 2 = GND, 3 = TX."},{"@type":"HowToStep","position":4,"name":"Couper les fils inutiles","text":"Ne gardez que les 3 fils utiles : RX, GND, TX."},{"@type":"HowToStep","position":5,"name":"Raccorder côté Dupont","text":"Raccordez les fils à des connecteurs Dupont, idéalement via des Wago Inline."},{"@type":"HowToStep","position":6,"name":"Brancher sur le FTDI","text":"Branchez les Dupont sur le FTDI : TXD→broche 1, RXD→broche 3, GND→broche 2."},{"@type":"HowToStep","position":7,"name":"Vérifier le cavalier 5 V","text":"Vérifiez que le cavalier de tension du FTDI est sur 5 volts."},{"@type":"HowToStep","position":8,"name":"Relier au Raspberry Pi","text":"Reliez le FTDI au port USB de gauche du Pi, l'alimentation sur celui de droite."}]}
 </script>
@@ -165,7 +166,26 @@
 <footer>
   <img src="assets/favicon-32.png" alt="" width="24">
   <p>MINITEL GPT - un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+  <nav class="footer-legal" aria-label="Informations légales">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Politique de confidentialité</a>
+    <a href="cookies.html">Cookies</a>
+  </nav>
+
 </footer>
+
+<div id="cookie-modal" role="region" aria-label="Consentement aux cookies">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <p class="cookie-title">Gestion des cookies</p>
+      <p>Ce site n'utilise aucun cookie publicitaire ou de suivi. <a href="cookies.html">En savoir plus</a>.</p>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn btn-primary" onclick="cookieChoice('accept')">Accepter</button>
+      <button type="button" class="btn btn-ghost" onclick="cookieChoice('refuse')">Refuser</button>
+    </div>
+  </div>
+</div>
 
 <script>
 new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)

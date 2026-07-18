@@ -21,6 +21,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon-180.png">
 <link rel="stylesheet" href="style.css">
 <script src="assets/nav.js" defer></script>
+<script src="assets/cookies.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HowTo","name":"Installer MINITEL GPT sur un Raspberry Pi","description":"Mettre en route MINITEL GPT pas à pas : carte SD, connexion SSH, installation, clé API.","inLanguage":"fr-FR","totalTime":"PT20M","step":[{"@type":"HowToStep","position":1,"name":"Préparer la carte SD","text":"Flasher Raspberry Pi OS Lite avec Raspberry Pi Imager, activer SSH, définir l'utilisateur minitel et le WiFi."},{"@type":"HowToStep","position":2,"name":"Se connecter au Pi en SSH","text":"Depuis PowerShell, trouver l'IP du Pi avec arp -a puis se connecter en ssh minitel@IP."},{"@type":"HowToStep","position":3,"name":"Mettre à jour et installer git","text":"sudo apt update puis sudo apt install git."},{"@type":"HowToStep","position":4,"name":"Télécharger et installer","text":"git clone du projet puis sudo bash install.sh, et démarrer les services."},{"@type":"HowToStep","position":5,"name":"Renseigner la clé API","text":"Choisir le fournisseur (Mistral ou Claude) et coller la clé dans l'interface d'administration."}]}
 </script>
@@ -151,7 +152,26 @@ sudo bash install.sh</pre>
 <footer>
   <img src="assets/favicon-32.png" alt="" width="24">
   <p>MINITEL GPT - un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</p>
+  <nav class="footer-legal" aria-label="Informations légales">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Politique de confidentialité</a>
+    <a href="cookies.html">Cookies</a>
+  </nav>
+
 </footer>
+
+<div id="cookie-modal" role="region" aria-label="Consentement aux cookies">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <p class="cookie-title">Gestion des cookies</p>
+      <p>Ce site n'utilise aucun cookie publicitaire ou de suivi. <a href="cookies.html">En savoir plus</a>.</p>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn btn-primary" onclick="cookieChoice('accept')">Accepter</button>
+      <button type="button" class="btn btn-ghost" onclick="cookieChoice('refuse')">Refuser</button>
+    </div>
+  </div>
+</div>
 
 <script>
 new Image().src = 'track.php?r=' + encodeURIComponent(document.referrer)
