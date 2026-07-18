@@ -31,6 +31,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://minitel-gpt.herard.com/evenementiel.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://minitel-gpt.herard.com/github.html</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
