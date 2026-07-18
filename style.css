@@ -125,6 +125,25 @@ pre.cmd .c{color:var(--muted)}
 .mainnav .nav-links svg{width:17px;height:17px}
 @media(max-width:660px){.mainnav{justify-content:center;gap:6px 16px}.mainnav .nav-links{margin-left:0;justify-content:center}}
 
+/* MENU DEROULANT (Do It Yourself) */
+.nav-dropdown{position:relative}
+.nav-dropdown-toggle{background:none;border:none;font:inherit;color:var(--muted);font-size:.92em;
+  font-weight:600;display:inline-flex;align-items:center;gap:5px;cursor:pointer;padding:0}
+.nav-dropdown-toggle:hover,.nav-dropdown-toggle.active,.nav-dropdown.open .nav-dropdown-toggle{color:var(--accent)}
+.nav-dropdown-toggle .chev{transition:transform .2s ease;flex:none}
+.nav-dropdown.open .nav-dropdown-toggle .chev{transform:rotate(180deg)}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:8px;min-width:230px;
+  display:none;flex-direction:column;gap:2px;box-shadow:0 14px 40px rgba(0,0,0,.5);z-index:60}
+.nav-dropdown-menu a{color:var(--muted);font-size:.92em;font-weight:600;padding:8px 10px;border-radius:6px;white-space:nowrap}
+.nav-dropdown-menu a:hover,.nav-dropdown-menu a.active{color:var(--accent);background:rgba(78,205,196,.08)}
+.nav-dropdown.open .nav-dropdown-menu{display:flex}
+@media(hover:hover){
+  .nav-dropdown:hover .nav-dropdown-menu{display:flex}
+  .nav-dropdown:hover .nav-dropdown-toggle{color:var(--accent)}
+}
+@media(max-width:660px){.nav-dropdown-menu{left:0;transform:none}}
+
 /* Liens à icône (LinkedIn, GitHub) */
 .icon-link{display:inline-flex;align-items:center;gap:9px;font-weight:700}
 .icon-link svg{width:24px;height:24px;flex:none}
