@@ -9,6 +9,7 @@
 - [Notice de câblage](https://minitel-gpt.herard.com/notice-cablage.html): brochage détaillé de la prise DIN péri-informatique et montage du FTDI.
 - [Installation](https://minitel-gpt.herard.com/installation.html): guide pas à pas pour installer le logiciel sur le Raspberry Pi et configurer la clé API.
 - [Interface d'administration](https://minitel-gpt.herard.com/interface-admin.html): documentation de l'interface web (personnalités, clé API, fichiers de connaissance).
+- [Événementiel](https://minitel-gpt.herard.com/evenementiel.html): offre de location de Minitel MINITEL GPT personnalisés pour événements pro et sièges d'entreprise (personnalité sur mesure, contenus client, applications sur mesure jusqu'aux jeux en réseau).
 - [Code source (GitHub)](https://github.com/jherard-fr/minitel-gpt): code complet, open source.
 - [Contact](https://minitel-gpt.herard.com/contact.html): pour toute question ou demande de location d'un dispositif clé en main.
 
