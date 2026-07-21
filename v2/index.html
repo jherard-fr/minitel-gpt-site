@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MINITEL GPT - Un Minitel des années 80 propulsé par l'IA</title>
+<meta name="description" content="Transformez un Minitel des années 80 en terminal de chat IA, propulsé par un Raspberry Pi (Zero W, Zero 2 W ou Pi 3) et l'IA de votre choix : Mistral ou Claude. Tutoriel de câblage pas à pas, interface d'administration web et code open source.">
+<meta name="keywords" content="Minitel, Raspberry Pi, intelligence artificielle, Mistral, Claude, Anthropic, Vidéotex, rétro, DIY, chatbot, télématique, Pi Zero W, Pi Zero 2 W">
+<meta name="author" content="Jérôme Hérard">
+<link rel="canonical" href="https://minitel-gpt.herard.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MINITEL GPT">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="MINITEL GPT - un Minitel des années 80 propulsé par l'IA">
+<meta property="og:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral ou Claude. Câblage, admin web, open source.">
+<meta property="og:url" content="https://minitel-gpt.herard.com/">
+<meta property="og:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MINITEL GPT - un Minitel des années 80 propulsé par l'IA">
+<meta name="twitter:description" content="Un Minitel ressuscité en terminal de chat IA, avec un Raspberry Pi et l'IA Mistral ou Claude.">
+<meta name="twitter:image" content="https://minitel-gpt.herard.com/assets/notice/resultat.JPG">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="site.js" defer></script>
+<script src="/assets/cookies.js" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"MINITEL GPT","url":"https://minitel-gpt.herard.com/","inLanguage":"fr-FR","description":"Un Minitel des années 80 transformé en terminal de chat IA avec un Raspberry Pi et l'IA Mistral ou Claude.","author":{"@type":"Person","name":"Jérôme Hérard","sameAs":["https://github.com/jherard-fr","https://www.linkedin.com/in/jerome-herard"]}}
+</script>
+</head>
+<body>
+
+<div id="boot" aria-hidden="true">
+  <div class="b-inner">
+    <div class="b-l">CONNEXION AU SERVICE...</div>
+    <div class="b-l">3615 MINITEL GPT</div>
+    <div class="b-l">1200 BAUDS &middot; 7E1
+      <div class="b-bar"><i></i></div>
+    </div>
+  </div>
+</div>
+
+<div id="cursor" aria-hidden="true"></div>
+<div id="etat" aria-hidden="true"><i></i><span id="etat-txt">CONNECTÉ · 000</span></div>
+
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <a class="nav-marque" href="index.html">
+    <img src="/assets/favicon-32.png" width="26" height="26" alt="">
+    MINITEL&nbsp;<span class="gpt">GPT</span>
+  </a>
+  <div class="nav-liens">
+    <a href="evenementiel.html" class="cachable">Événementiel</a>
+    <div class="nav-deroulant cachable">
+      <button type="button" class="nav-deroulant-bouton" aria-expanded="false">Do It Yourself <svg class="chev" viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 7l5 5 5-5"/></svg></button>
+      <div class="nav-deroulant-menu">
+        <a href="notice-cablage.html">Câblage pas à pas</a>
+        <a href="installation.html">Installation</a>
+        <a href="interface-admin.html">Interface d'administration</a>
+      </div>
+    </div>
+    <a href="faq.html" class="cachable">FAQ</a>
+    <a href="github.html" class="cachable">GitHub</a>
+    <a href="contact.html" class="cachable">Contact</a>
+    <a href="contact.html" class="btn btn-envoi nav-cta cachable" style="padding:12px 20px;font-size:11.5px">Demander une offre</a>
+    <button type="button" class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="menu-mobile" id="menu-mobile">
+  <a href="index.html" class="active" style="--i:0">Accueil</a>
+  <a href="evenementiel.html" style="--i:1">Événementiel</a>
+  <div class="sep"></div>
+  <a href="notice-cablage.html" class="sous" style="--i:2">Câblage pas à pas</a>
+  <a href="installation.html" class="sous" style="--i:3">Installation</a>
+  <a href="interface-admin.html" class="sous" style="--i:4">Interface d'administration</a>
+  <div class="sep"></div>
+  <a href="faq.html" style="--i:5">FAQ</a>
+  <a href="github.html" style="--i:6">GitHub</a>
+  <a href="contact.html" style="--i:7">Contact</a>
+  <a class="btn btn-envoi menu-cta" href="contact.html" style="--i:8">Demander une offre</a>
+</div>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero" id="haut">
+  <div class="hero-grille">
+    <div>
+      <p class="sur-titre" data-reveal>Location &amp; vente · Événementiel · Depuis 1982, ou presque</p>
+      <h1>
+        <span class="ligne"><span style="--d:.15s">Un Minitel</span></span>
+        <span class="ligne ligne-ghost"><span style="--d:.27s"><span class="ghost">des années 80,</span></span></span>
+        <span class="ligne"><span style="--d:.39s">ressuscité en</span></span>
+        <span class="ligne"><span style="--d:.51s">terminal <span class="accent">IA</span></span></span>
+      </h1>
+      <p class="hero-pitch" data-reveal style="--d:250ms">
+        Un vrai Minitel, remis en état de marche, qui dialogue avec <strong>Mistral</strong> ou
+        <strong>Claude</strong> — personnalisé aux couleurs de votre marque ou de votre soirée.
+        L'animation qui arrête tout le monde sur un stand.
+      </p>
+      <div class="hero-cta" data-reveal style="--d:400ms">
+        <a class="btn btn-envoi" href="contact.html"><span class="pastille"></span>Demander une offre</a>
+        <a class="btn btn-ghost" href="evenementiel.html">L'offre événementiel</a>
+      </div>
+      <p class="hero-note" data-reveal style="--d:550ms">
+        Déjà vu au Raise Summit &amp; chez SNCF Voyageurs · Projet <a href="github.html">open source</a>
+      </p>
+    </div>
+    <div data-reveal="droite" style="--d:350ms">
+      <div class="crt-cadre" id="crt-cadre">
+        <div class="crt">
+          <div class="crt-texte" id="crt-texte" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-piste">
+      <span><b>3615 MINITEL GPT</b> ★ un Minitel + une IA ★ location clé en main ★ personnalité sur mesure ★ vos contenus injectés ★ jeux en réseau ★ <b>open source</b> ★&nbsp;</span>
+      <span><b>3615 MINITEL GPT</b> ★ un Minitel + une IA ★ location clé en main ★ personnalité sur mesure ★ vos contenus injectés ★ jeux en réseau ★ <b>open source</b> ★&nbsp;</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ======================= CHIFFRES ======================= -->
+<section aria-label="Le projet en chiffres" style="padding-top:clamp(48px,7vh,80px);padding-bottom:clamp(48px,7vh,80px)">
+  <div class="contenu">
+    <div class="chiffres">
+      <div class="chiffre" data-reveal style="--d:0ms"><b>1200</b><span>bauds, comme en 1982</span></div>
+      <div class="chiffre" data-reveal style="--d:100ms"><b>40</b><span>colonnes Vidéotex</span></div>
+      <div class="chiffre" data-reveal style="--d:200ms"><b>≈ 1 h</b><span>de montage (version DIY)</span></div>
+      <div class="chiffre" data-reveal style="--d:300ms"><b>100 %</b><span>open source sur GitHub</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CONCEPT ======================= -->
+<section id="concept">
+  <div class="contenu">
+    <div class="entete-section">
+      <p class="num-label" data-reveal>01 · Le concept</p>
+      <h2 data-reveal style="--d:100ms">L'écran cathodique qui répond du tac au tac</h2>
+    </div>
+    <div class="deux-col">
+      <div class="prose" data-reveal="gauche">
+        <p>MINITEL GPT redonne vie à un <strong>Minitel</strong> en le transformant en terminal de dialogue avec une intelligence artificielle.</p>
+        <p>Un outil parfait pour animer vos événements perso ou pro, ou pour vos enfants&nbsp;: vous choisissez les messages de personnalisation de l'interface, vous définissez une «&nbsp;personnalité&nbsp;» pour les discussions, vous ajoutez des fichiers qui nourrissent les dialogues avec vos propres contenus, et c'est parti&nbsp;!</p>
+        <p>La réalisation de ce dispositif prend environ une heure quand on a tous les matériels et outils. Nous vous proposons aussi de vous fournir, <strong>en location ou à l'achat</strong>, des dispositifs clé en main personnalisés selon vos besoins&nbsp;: <a href="contact.html">n'hésitez pas à nous contacter</a>.</p>
+        <p><a class="li-lien" href="https://www.linkedin.com/posts/jerome-herard_mistralai-opensource-minitel-ugcPost-7470582757946187777-uWxs" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg> Voir le projet sur LinkedIn</a></p>
+        <p>Une question sur le câblage ou la connexion à l'IA&nbsp;? Consultez la <a href="faq.html">FAQ</a>.</p>
+      </div>
+      <figure data-reveal="droite" style="--d:150ms">
+        <div class="video-cadre">
+          <video class="concept-video" controls preload="metadata" playsinline poster="/assets/notice/minitel2.JPG">
+            <source src="/assets/minitel-gpt.mp4" type="video/mp4">
+            Votre navigateur ne lit pas les vidéos HTML5 —
+            <a href="/assets/minitel-gpt.mp4">télécharger la vidéo</a>.
+          </video>
+        </div>
+        <figcaption>MINITEL GPT en action — cliquez sur ▶ pour lancer la vidéo.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= EN IMAGES ======================= -->
+<section id="captures" class="alt">
+  <div class="contenu">
+    <div class="entete-section">
+      <p class="num-label" data-reveal>02 · En images</p>
+      <h2 data-reveal style="--d:100ms">Le terminal en fonctionnement</h2>
+    </div>
+    <div class="galerie">
+      <figure data-reveal style="--d:0ms">
+        <div class="img-boite"><span class="tag">Vidéotex</span><img src="/assets/notice/minitel1.JPG" alt="Écran du Minitel affichant MINITEL GPT" loading="lazy"></div>
+        <figcaption>L'écran du Minitel</figcaption>
+      </figure>
+      <figure data-reveal style="--d:120ms">
+        <div class="img-boite"><span class="tag">Dialogue IA</span><img src="/assets/notice/minitel2.JPG" alt="Écran du Minitel en dialogue avec l'IA" loading="lazy"></div>
+        <figcaption>Une conversation à l'écran</figcaption>
+      </figure>
+      <figure data-reveal style="--d:0ms">
+        <div class="img-boite"><span class="tag">Le montage</span><img src="/assets/notice/resultat.JPG" alt="Le montage : Raspberry Pi relié au FTDI" loading="lazy"></div>
+        <figcaption>Le montage Raspberry Pi + FTDI</figcaption>
+      </figure>
+      <figure data-reveal style="--d:120ms">
+        <div class="img-boite"><span class="tag">Admin web</span><img src="/assets/notice/personnalites.png" alt="L'éditeur de personnalités de l'interface d'administration" loading="lazy"></div>
+        <figcaption>L'éditeur de personnalités</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ARCHITECTURE ======================= -->
+<section id="archi">
+  <div class="contenu">
+    <div class="entete-section">
+      <p class="num-label" data-reveal>03 · Architecture logicielle</p>
+      <h2 data-reveal style="--d:100ms">Trois services, zéro écran, zéro clavier</h2>
+    </div>
+    <div class="cartes" style="margin-top:0">
+      <div class="carte" data-n="01" data-reveal style="--d:0ms">
+        <div class="picto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>minitel-chatgpt</h3>
+        <p>Le terminal&nbsp;: lit le clavier Minitel, interroge l'IA, affiche la réponse paginée.
+        Gère le titre ASCII, les touches de fonction (Envoi, Suite, Sommaire) et le retour
+        automatique au sommaire.</p>
+      </div>
+      <div class="carte" data-n="02" data-reveal style="--d:120ms">
+        <div class="picto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 9c5.5-5.3 14.5-5.3 20 0M5.5 13c3.6-3.4 9.4-3.4 13 0M9 16.8c1.7-1.6 4.3-1.6 6 0"/><circle cx="12" cy="20" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+        <h3>wifi-manager</h3>
+        <p>Connexion autonome façon objet connecté&nbsp;: rejoint un réseau connu, ou bascule
+        en <strong>hotspot ouvert</strong> avec portail captif pour configurer le WiFi du
+        lieu — sans clavier ni écran externe.</p>
+      </div>
+      <div class="carte" data-n="03" data-reveal style="--d:240ms">
+        <div class="picto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.09c0 .68.4 1.29 1.03 1.56a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9c.27.63.88 1.03 1.56 1.03H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.56 1.03Z"/></svg></div>
+        <h3>admin-ui</h3>
+        <p>Interface web à onglets&nbsp;: <strong>choix du fournisseur d'IA (Mistral ou Claude)</strong>,
+        création de «&nbsp;personnalités&nbsp;», génération de consignes par IA, zone de test sans le Minitel,
+        <strong>fichiers de connaissance</strong> (.txt) pour nourrir chaque personnalité, textes
+        d'accueil personnalisables et clés API.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= STACK ======================= -->
+<section id="stack" class="alt">
+  <div class="contenu">
+    <div class="entete-section">
+      <p class="num-label" data-reveal>04 · Stack technique</p>
+      <h2 data-reveal style="--d:100ms">Du matériel qui tient dans la coque</h2>
+      <p class="lead" data-reveal style="--d:200ms">Compatible <strong>Raspberry Pi Zero W</strong>, <strong>Pi Zero 2 W</strong> et <strong>Pi 3</strong> — le Pi Zero W (le moins cher, il tient dans le boîtier) suffit largement.</p>
+    </div>
+    <div class="chips" data-reveal>
+      <span>Raspberry Pi Zero W / Zero 2 W / Pi 3</span>
+      <span>Raspberry Pi OS Lite</span>
+      <span>Python 3</span>
+      <span>pyserial</span>
+      <span>Flask</span>
+      <span>NetworkManager / nmcli</span>
+      <span>dnsmasq</span>
+      <span>systemd</span>
+      <span>API Mistral ou Claude</span>
+      <span>Videotex / ASCII</span>
+    </div>
+    <div class="os-liens" data-reveal style="max-width:640px;margin-top:34px">
+      <a href="https://github.com/jherard-fr/minitel-gpt" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.21 3.438 9.63 8.205 11.19.6.11.82-.26.82-.58 0-.29-.01-1.04-.015-2.04-3.338.72-4.042-1.61-4.042-1.61-.546-1.38-1.333-1.75-1.333-1.75-1.09-.74.083-.73.083-.73 1.205.085 1.84 1.24 1.84 1.24 1.07 1.83 2.807 1.3 3.492.99.108-.78.42-1.3.762-1.6-2.665-.3-5.466-1.33-5.466-5.93 0-1.31.469-2.38 1.236-3.22-.124-.3-.535-1.52.117-3.18 0 0 1.008-.32 3.3 1.23a11.5 11.5 0 0 1 3.003-.4c1.02.005 2.047.138 3.006.4 2.29-1.55 3.297-1.23 3.297-1.23.653 1.66.242 2.88.118 3.18.77.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.625-5.479 5.92.43.37.823 1.1.823 2.22 0 1.6-.015 2.89-.015 3.28 0 .32.216.7.825.58C20.565 21.91 24 17.49 24 12.29 24 5.78 18.627.5 12 .5z"/></svg>
+        Tout le code est open source — jherard-fr/minitel-gpt
+        <span class="fleche">→</span>
+      </a>
+      <a href="notice-cablage.html">Envie de le construire vous-même&nbsp;? Suivez le guide <span class="fleche">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TEASER ÉVÉNEMENTIEL ======================= -->
+<section id="evenementiel-teaser">
+  <div class="contenu">
+    <div class="deux-col">
+      <div data-reveal="gauche">
+        <p class="num-label">05 · Événementiel</p>
+        <h2 style="font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(26px,3.9vw,54px);line-height:1.04;letter-spacing:-.01em">Un Minitel qui parle de votre événement</h2>
+        <p class="lead" style="margin-top:20px;color:var(--creme-sourd)">Location de terminaux MINITEL GPT personnalisés, pour surprendre vos invités — anniversaires, salons, sièges d'entreprise. Déjà déployé pour LinkUp au Raise Summit et pour SNCF Voyageurs.</p>
+        <div class="hero-cta">
+          <a class="btn btn-envoi" href="evenementiel.html"><span class="pastille"></span>Découvrir l'offre</a>
+          <a class="btn btn-ghost" href="contact.html">Demander un devis</a>
+        </div>
+      </div>
+      <figure data-reveal="droite" style="--d:150ms">
+        <div class="fig-cadre"><img src="/assets/evenementiel/sncf-groundcontrol-2.jpg" alt="Écran Vidéotex affichant « 3615 SNCF powered by Claude » sur le Minitel personnalisé pour SNCF Voyageurs" loading="lazy"></div>
+        <figcaption>«&nbsp;3615 SNCF&nbsp;» — le Minitel personnalisé pour Ground Control.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CTA ======================= -->
+<section class="cta-band" id="cta">
+  <div class="contenu">
+    <h2 data-reveal>Un projet, une question,<br>une location&nbsp;?</h2>
+    <p class="lead" data-reveal style="--d:120ms">Parlez-nous de votre projet — nous répondons directement, et rapidement.</p>
+    <div class="hero-cta" data-reveal style="--d:240ms">
+      <a class="btn btn-envoi" href="contact.html"><span class="pastille"></span>Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="f-marque">
+    <img src="/assets/favicon-32.png" alt="" width="22">
+    <span>MINITEL GPT — un projet de Jérôme Hérard.<br>Construit avec un Minitel, un Raspberry Pi et beaucoup de patience.</span>
+  </div>
+  <nav aria-label="Informations légales">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Politique de confidentialité</a>
+    <a href="cookies.html">Cookies</a>
+    <a href="https://github.com/jherard-fr/minitel-gpt" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+  <span class="f-3615" aria-hidden="true">3615 MINITEL GPT</span>
+</footer>
+
+<div id="cookie-modal" role="region" aria-label="Consentement aux cookies">
+  <div class="cookie-text">
+    <p class="cookie-title">Gestion des cookies</p>
+    <p>Ce site n'utilise aucun cookie publicitaire ou de suivi. <a href="cookies.html">En savoir plus</a>.</p>
+  </div>
+  <div class="cookie-actions">
+    <button type="button" class="btn btn-envoi" onclick="cookieChoice('accept')">Accepter</button>
+    <button type="button" class="btn btn-ghost" onclick="cookieChoice('refuse')">Refuser</button>
+  </div>
+</div>
+
+<script>
+// Statistiques de visite (collecteur track.php)
+new Image().src = '/track.php?r=' + encodeURIComponent(document.referrer)
+  + '&p=' + encodeURIComponent(location.pathname) + '&_=' + Date.now();
+</script>
+</body>
+</html>
