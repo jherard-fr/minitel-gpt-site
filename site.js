@@ -104,7 +104,7 @@
   var ecran = document.getElementById("crt-texte");
   if (ecran) {
     var SCENARIO = [
-      { t: "instant", txt: "          ┌─────────────────┐\n          │   MINITEL GPT   │\n          └─────────────────┘\n\n" },
+      { t: "instant", txt: "          +-----------------+\n          |   MINITEL GPT   |\n          +-----------------+\n\n" },
       { t: "instant", txt: "   *** BON ANNIVERSAIRE JEF ! ***\n\n     Quelle question 80's as-tu ?\n\n" },
       { t: "pause", ms: 900 },
       { t: "tape", txt: "> OU SORTIR A PARIS CE SOIR ?", ms: 75 },
