@@ -161,7 +161,7 @@
           else if (d.error === "rate") { st.textContent = "Doucement ! Patientez une minute avant d'envoyer un nouveau message."; st.classList.add("err"); }
           else { st.textContent = "Oups, l'envoi a échoué. Réessayez ou écrivez à jerome@herard.com."; st.classList.add("err"); }
         })
-        .catch(function () { st.textContent = "Erreur réseau. Réessayez plus tard."; st.classList.add("err"); })
+        .catch(function () { st.textContent = "Erreur réseau. Réessayez ou écrivez à jerome@herard.com."; st.classList.add("err"); })
         .finally(function () { btn.disabled = false; btn.innerHTML = lbl; });
     });
   }
