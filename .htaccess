@@ -1,3 +1,15 @@
+# minitel-evenementiel.com est un domaine d'envoi géré par Instantly (prospection
+# cold-email), configuré côté Instantly pour proxier/mirrorer ce site en transparent
+# (même contenu, chemin par chemin) — c'est pourquoi une redirection posée ICI
+# s'applique aussi sur ce domaine. Sert à donner un lien de désabonnement aligné avec
+# le domaine expéditeur plutôt que le domaine de l'app de prospection (outreach.herard.com),
+# sans toucher au DNS (qu'on ne contrôle pas sur ce domaine). La page réelle de
+# désabonnement (mise à jour en base) reste sur l'app — ceci n'est qu'un renvoi.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^se-desinscrire/?$ https://outreach.herard.com/unsubscribe [R=302,L,QSA]
+</IfModule>
+
 # Bloque tout accès web au dossier de données (hits, géoloc, IP exclues, logs…)
 <IfModule mod_alias.c>
   RedirectMatch 403 ^/data/
