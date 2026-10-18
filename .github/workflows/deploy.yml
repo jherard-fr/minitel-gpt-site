@@ -35,3 +35,30 @@ jobs:
             data/**
             recolor_logo.py
           state-name: .ftp-deploy-sync-state.json
+
+      # IndexNow : prévient Bing (et les moteurs partenaires) des pages modifiées.
+      # La clé est publique par conception (fichier <clé>.txt à la racine du site).
+      # Une page .html modifiée est soumise seule ; une modif de style.css, site.js
+      # ou assets/ touche toutes les pages, donc on soumet tout le sitemap.
+      # Un échec ne doit jamais faire échouer le déploiement.
+      - name: Notifier Bing (IndexNow)
+        continue-on-error: true
+        run: |
+          KEY=7364f1c2a22b4f9b93195d89d93f1db7
+          HOST=minitel-gpt.herard.com
+          CHANGED=$(git diff --name-only HEAD^ HEAD 2>/dev/null || true)
+          if echo "$CHANGED" | grep -qE '^(style\.css|site\.js|assets/)'; then
+            URLS=$(grep -oP '(?<=<loc>)[^<]+' sitemap.xml)
+          else
+            URLS=$(echo "$CHANGED" | grep -E '^[^/]+\.html$' \
+              | sed -E 's#^index\.html$##; s#^(.*)$#https://'"$HOST"'/\1#' || true)
+          fi
+          if [ -z "$URLS" ]; then echo "Aucune page à soumettre."; exit 0; fi
+          echo "URLs soumises :"; echo "$URLS"
+          BODY=$(echo "$URLS" | jq -R . | jq -s --arg host "$HOST" --arg key "$KEY" \
+            --arg loc "https://$HOST/$KEY.txt" \
+            '{host:$host, key:$key, keyLocation:$loc, urlList:.}')
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' -X POST https://www.bing.com/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' -d "$BODY")
+          echo "IndexNow -> HTTP $CODE"
+          case "$CODE" in 200|202) ;; *) exit 1;; esac
