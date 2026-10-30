@@ -20,3 +20,4 @@
 - IA supportées : Mistral (mistral-small-latest) et Claude (Anthropic), clé API au choix depuis l'interface d'administration, sans ligne de commande.
 - Minitel 1 et Minitel 2 sont tous deux compatibles avec le même câblage (le Minitel 2 nécessite Fnct+Sommaire à l'allumage pour passer en Vidéotex natif).
 - Le code est open source (GitHub jherard-fr/minitel-gpt).
+- Test du clavier : si une touche de fonction (Envoi, Sommaire...) ne réagit pas, l'interface d'administration (onglet Paramètres) ou les touches Guide puis Répétition du Minitel lancent un test qui lit le code envoyé par chaque touche, apprend automatiquement les codes inhabituels (certains Minitel 2) et signale les touches muettes.
