@@ -23,7 +23,14 @@ if (is_file($file)) {
 }
 
 // ── Exclusion de mes visites (case cochée par défaut) ────────────────────
-$MY_IPS = ['0.0.0.0'];   // IP(s) explicitement exclues
+// IP(s) explicitement exclues : lues dans data/my_ips.json (JSON: ["x.x.x.x"]),
+// fichier local au serveur, hors dépôt (data/ n'est pas déployé ni versionné).
+$MY_IPS = [];
+$ips_file = $dir . '/my_ips.json';
+if (is_file($ips_file)) {
+    $j = json_decode((string)file_get_contents($ips_file), true);
+    if (is_array($j)) $MY_IPS = array_values(array_filter($j, 'is_string'));
+}
 $base = 'stats.php?token=' . urlencode($token);
 $exclude_on = ($_GET['myip'] ?? '1') !== '0';
 
